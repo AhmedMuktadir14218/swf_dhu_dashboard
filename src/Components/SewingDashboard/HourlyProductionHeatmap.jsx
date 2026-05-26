@@ -7,16 +7,16 @@ const rows = [
 
 export default function HourlyProductionHeatmap() {
   return (
-    <div className="rounded-xl border border-white/15 bg-[#0a1f3d] overflow-hidden">
-      <div className="px-4 py-3 border-b border-white/10 text-lg font-extrabold uppercase text-white">
+    <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden shrink-0">
+      <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white">
         Hourly Production Tracker
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[1500px] text-xs text-white">
+        <table className="w-full min-w-[1500px] text-[11px] text-white">
           <thead className="bg-[#11458b]">
             <tr>
               {["Sewing Line","1","2","3","4","5","6","7","8","9","10","11","12","Avg Eff %","Best Hour","Lowest Hour","Total Output"].map((head) => (
-                <th key={head} className="px-2 py-2 border border-white/10 text-center whitespace-nowrap">{head}</th>
+                <th key={head} className="px-2 py-1 border border-white/10 text-center whitespace-nowrap">{head}</th>
               ))}
             </tr>
           </thead>
@@ -24,7 +24,7 @@ export default function HourlyProductionHeatmap() {
             {rows.map((row, idx) => (
               <tr key={idx} className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c]">
                 {row.map((cell, i) => (
-                  <td key={i} className={`px-2 py-2 border border-white/10 whitespace-pre-line text-center align-middle ${i === 0 ? 'font-bold text-left' : ''}`}>
+                  <td key={i} className={`px-2 py-1 border border-white/10 whitespace-pre-line text-center align-middle leading-tight ${i === 0 ? 'font-bold text-left' : ''}`}>
                     {cell}
                   </td>
                 ))}
@@ -33,11 +33,11 @@ export default function HourlyProductionHeatmap() {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-wrap items-center gap-6 px-4 py-3 text-xs border-t border-white/10 text-white/80 bg-[#061830]">
-        <div className="flex items-center gap-2"><span className="w-3 h-3 bg-green-500 rounded-sm"></span>Efficiency ≥ Target</div>
-        <div className="flex items-center gap-2"><span className="w-3 h-3 bg-yellow-400 rounded-sm"></span>Efficiency within -10% to Target</div>
-        <div className="flex items-center gap-2"><span className="w-3 h-3 bg-red-500 rounded-sm"></span>Efficiency &lt; Target -10%</div>
-        <div className="ml-auto font-semibold">Each cell: Actual / Target &nbsp;|&nbsp; Top %: Efficiency &nbsp;|&nbsp; Bottom %: DHU</div>
+      <div className="flex flex-wrap items-center gap-4 px-3 py-1 text-[10px] border-t border-white/10 text-white/80 bg-[#061830]">
+        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-green-500 rounded-sm"></span>Eff ≥ Target</div>
+        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-yellow-400 rounded-sm"></span>Eff within -10%</div>
+        <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-sm"></span>Eff &lt; Target -10%</div>
+        <div className="ml-auto font-semibold">Actual / Target | Top %: Eff | Bottom %: DHU</div>
       </div>
     </div>
   );
