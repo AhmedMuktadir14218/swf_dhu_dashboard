@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { ChevronDown, Check } from 'lucide-react';
+import { ChevronDown, Check, Search } from 'lucide-react';
 import { useFilter } from './FilterContext';
 
 const CheckboxDropdownMenu = ({ anchorRect, options, selected, onToggle, onSelectAll, onClear, onClose, allSelected }) => {
@@ -12,12 +12,6 @@ const CheckboxDropdownMenu = ({ anchorRect, options, selected, onToggle, onSelec
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, [onClose]);
-
-  useEffect(() => {
-    const handleScroll = () => onClose();
-    window.addEventListener('scroll', handleScroll, true);
-    return () => window.removeEventListener('scroll', handleScroll, true);
   }, [onClose]);
 
   return createPortal(
@@ -147,13 +141,16 @@ const DateInput = ({ label, value, onChange }) => (
         onChange={(e) => onChange(e.target.value)}
         className="h-7 w-full rounded-md border border-white/15 bg-[#0f1d36] px-2.5 pr-2 text-[12px] text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 outline-none focus:border-sky-500/50 [color-scheme:dark]"
       />
-      {/* <CalendarDays className="w-3.5 h-3.5 text-white/40 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" /> */}
     </div>
   </div>
 );
 
 export default function FilterBar() {
-  const { filters, setFilters, filterOptions, loading } = useFilter();
+  const { filters, setFilters, filterOptions, loading, dataLoading, setManualTrigger } = useFilter();
+
+  const handleSearch = () => {
+    setManualTrigger(true);
+  };
 
   const togglePlant = (id) => {
     setFilters(prev => {
@@ -271,6 +268,17 @@ export default function FilterBar() {
         onClear={clearLines}
         loading={loading}
       />
+      <div className="flex flex-col justify-end">
+        <button
+          onClick={handleSearch}
+          disabled={dataLoading}
+          className="h-7 px-3 rounded-md border border-white/15 bg-[#0f1d36] text-white/90 hover:bg-[#142244] hover:border-white/25 transition-all duration-150 disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+          title="Apply filter"
+        >
+          <Search className={`w-3.5 h-3.5 text-sky-400 ${dataLoading ? 'animate-pulse' : ''}`} />
+          <span className="text-[12px]">Apply</span>
+        </button>
+      </div>
     </div>
   );
 }

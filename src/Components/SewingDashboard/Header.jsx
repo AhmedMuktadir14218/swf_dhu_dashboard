@@ -38,6 +38,7 @@ export default function Header({ children }) {
         >
           <RefreshCcw className={`w-4 h-4 text-sky-400 ${dataLoading ? 'animate-spin' : ''}`} />
         </button>
+      
         <div>
           <div className="text-[10px] font-bold text-white leading-tight">Last Refresh</div>
           <div className="text-[10px] text-white/80">{lastRefresh}</div>

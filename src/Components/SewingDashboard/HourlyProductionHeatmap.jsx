@@ -1,21 +1,108 @@
-const rows = [
-  ["LINE-A", "445/620\n46.6% / 8.3%", "576/620\n59.5% / 12.0%", "591/620\n60.6% / 9.8%", "612/620\n56.2% / 7.5%", "543/620\n49.2% / 9.4%", "641/620\n59.3% / 6.9%", "666/620\n62.2% / 5.6%", "653/620\n62.8% / 5.1%", "665/620\n63.6% / 8.6%", "627/620\n60.3% / 18.7%", "822/620\n79.2% / 3.2%", "213/620\n31.5% / 3.0%", "58.7%", "11 (79.2%)", "12 (31.5%)", "7,326"],
-  ["Line-A1", "123/131\n59.7% / 16.3%", "132/131\n64.1% / 13.6%", "145/131\n70.4% / 12.4%", "111/131\n53.9% / 7.2%", "135/131\n65.5% / 13.3%", "143/131\n69.4% / 11.2%", "112/131\n54.4% / 11.6%", "147/131\n71.4% / 11.6%", "128/131\n62.1% / 9.4%", "122/131\n59.2% / 12.3%", "145/131\n70.4% / 11.7%", "109/131\n52.9% / 10.1%", "61.0%", "8 (71.4%)", "12 (52.9%)", "1,670"],
-  ["Line-A2", "82/124\n46.5% / 22.0%", "110/124\n62.4% / 17.3%", "121/124\n68.7% / 20.7%", "99/124\n56.2% / 19.2%", "136/124\n77.2% / 21.3%", "112/124\n63.6% / 33.0%", "119/124\n67.5% / 30.3%", "154/124\n87.4% / 26.0%", "135/124\n76.6% / 20.7%", "112/124\n63.6% / 8.0%", "141/124\n80.0% / 0.0%", "121/124\n68.7% / 2.5%", "69.2%", "8 (87.4%)", "1 (46.5%)", "1,574"],
-  ["LINE-B", "343/482\n42.6% / 14.0%", "405/482\n50.7% / 13.6%", "392/482\n50.4% / 16.6%", "346/482\n41.7% / 11.6%", "431/482\n51.5% / 14.8%", "365/482\n45.4% / 7.7%", "386/482\n47.9% / 14.0%", "446/482\n52.2% / 9.9%", "491/482\n57.8% / 13.4%", "368/482\n43.1% / 7.3%", "447/482\n57.0% / 1.8%", "180/482\n71.1% / 1.1%", "49.9%", "9 (57.8%)", "1 (42.6%)", "4,872"],
-];
+import { useMemo } from 'react';
+import { useFilter } from './FilterContext';
+
+const getEffBg = (actualEff, planEff) => {
+  if (actualEff >= planEff) return 'bg-green-500/25';
+  if (actualEff >= planEff - 10) return 'bg-yellow-400/25';
+  return 'bg-red-500/25';
+};
 
 export default function HourlyProductionHeatmap() {
+  const { dashboardData } = useFilter();
+  const { hourlyLineDetails } = dashboardData;
+
+  const { rows, activeHours } = useMemo(() => {
+    if (!hourlyLineDetails || hourlyLineDetails.length === 0) return { rows: [], activeHours: [] };
+
+    const lineMap = {};
+    const hourSet = new Set();
+
+    hourlyLineDetails.forEach((item) => {
+      if (item.passQty > 0 || item.defectQty > 0 || item.actualEff > 0) {
+        hourSet.add(item.hourSlot);
+      }
+      if (!lineMap[item.sewingLineName]) {
+        lineMap[item.sewingLineName] = {
+          name: item.sewingLineName,
+          planEff: item.planEff,
+          hours: {}
+        };
+      }
+      lineMap[item.sewingLineName].hours[item.hourSlot] = item;
+    });
+
+    const sortedHours = [...hourSet].sort((a, b) => a - b);
+
+    const result = Object.values(lineMap).map((line) => {
+      const hourEntries = sortedHours.map((h) => line.hours[h]).filter(Boolean);
+      const avgEff = hourEntries.length > 0
+        ? hourEntries.reduce((s, h) => s + h.actualEff, 0) / hourEntries.length
+        : 0;
+      const totalOutput = hourEntries.reduce((s, h) => s + h.passQty, 0);
+
+      let bestHour = null;
+      let lowestHour = null;
+      let bestEff = -Infinity;
+      let lowestEff = Infinity;
+
+      hourEntries.forEach((h) => {
+        if (h.actualEff > bestEff) { bestEff = h.actualEff; bestHour = h; }
+        if (h.actualEff < lowestEff) { lowestEff = h.actualEff; lowestHour = h; }
+      });
+
+      const cells = [
+        line.name,
+        ...sortedHours.map((h) => {
+          const c = line.hours[h];
+          if (!c) return '';
+          return `${c.passQty}/${c.hourlyTarget}\n${c.actualEff.toFixed(1)}% / ${c.planEff.toFixed(1)}% \n${c.dhu.toFixed(1)}%`;
+        }),
+        `${avgEff.toFixed(1)}%`,
+        bestHour ? `${bestHour.hourSlot} (${bestHour.actualEff.toFixed(1)}%)` : '-',
+        lowestHour ? `${lowestHour.hourSlot} (${lowestHour.actualEff.toFixed(1)}%)` : '-',
+        totalOutput.toLocaleString()
+      ];
+
+      const cellData = sortedHours.map((h) => line.hours[h] || null);
+
+      return { cells, cellData, planEff: line.planEff };
+    });
+
+    return { rows: result, activeHours: sortedHours };
+  }, [hourlyLineDetails]);
+
+  const headers = [
+    'Sewing Line',
+    ...activeHours.map(String),
+    'Avg Eff %',
+    'Best Hour',
+    'Lowest Hour',
+    'Total Output'
+  ];
+
+  if (rows.length === 0) {
+    return (
+      <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden shrink-0">
+        <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white">
+          Hourly Production Tracker
+        </div>
+        <div className="flex items-center justify-center h-32 text-white/40 text-sm">
+          No data available
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden shrink-0">
-      <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white">
+    <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden shrink-0 flex flex-col h-full">
+      <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white shrink-0">
         Hourly Production Tracker
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[1500px] text-[11px] text-white">
-          <thead className="bg-[#11458b]">
+      <div className="overflow-y-auto flex-1">
+        <table className="w-full text-[11px] text-white">
+          <thead className="bg-[#11458b] sticky top-0 z-10">
             <tr>
-              {["Sewing Line","1","2","3","4","5","6","7","8","9","10","11","12","Avg Eff %","Best Hour","Lowest Hour","Total Output"].map((head) => (
+              {headers.map((head) => (
                 <th key={head} className="px-2 py-1 border border-white/10 text-center whitespace-nowrap">{head}</th>
               ))}
             </tr>
@@ -23,22 +110,64 @@ export default function HourlyProductionHeatmap() {
           <tbody>
             {rows.map((row, idx) => (
               <tr key={idx} className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c]">
-                {row.map((cell, i) => (
-                  <td key={i} className={`px-2 py-1 border border-white/10 whitespace-pre-line text-center align-middle leading-tight ${i === 0 ? 'font-bold text-left' : ''}`}>
-                    {cell}
-                  </td>
-                ))}
+                {row.cells.map((cell, i) => {
+                  if (i === 0) {
+                    return (
+                      <td key={i} className="px-2 py-1 border border-white/10 whitespace-nowrap text-center align-middle leading-tight font-bold text-left">
+                        {cell}
+                      </td>
+                    );
+                  }
+                  const hourIndex = i - 1;
+                  const hourCell = hourIndex < activeHours.length ? row.cellData[hourIndex] : null;
+                  const bgClass = hourCell ? getEffBg(hourCell.actualEff, row.planEff) : '';
+                  return (
+                    <td key={i} className={`px-2 py-1 border border-white/10 whitespace-pre-line text-center align-middle leading-tight ${bgClass}`}>
+                      {cell}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="flex flex-wrap items-center gap-4 px-3 py-1 text-[10px] border-t border-white/10 text-white/80 bg-[#061830]">
+      <div className="flex flex-wrap items-center gap-4 px-3 py-1 text-[10px] border-t border-white/10 text-white/80 bg-[#061830] shrink-0">
         <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-green-500 rounded-sm"></span>Eff ≥ Target</div>
         <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-yellow-400 rounded-sm"></span>Eff within -10%</div>
         <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-sm"></span>Eff &lt; Target -10%</div>
-        <div className="ml-auto font-semibold">Actual / Target | Top %: Eff | Bottom %: DHU</div>
+        <div className="ml-auto font-semibold">passQty / hourlyTarget | actualEff / planEff |  DHU
+           
+        </div>
       </div>
     </div>
   );
 }
+
+{/* <table headers> - <api parameters> 
+Buyer - buyerName
+Style - styleName
+Po  - poNumber
+Line In Qty - lineInQty
+Check_Front - if(qcStationDetails[{"qcStationId": 1,
+        "qcStation": "Front Side",}]){"checkQty": 1492}
+Check_Back -if(qcStationDetails[{"qcStationId": 1,
+        "qcStation": "Back Side",}]){"checkQty": 1492}
+Check_Output- if(qcStationDetails[{"qcStationId": 1,
+        "qcStation": "Output Side",}]){"checkQty": 1492}
+Check_Inside - if(qcStationDetails[{"qcStationId": 1,
+        "qcStation": "Inside Side",}]){"checkQty": 1492}
+Check_Top - if(qcStationDetails[{"qcStationId": 1,
+        "qcStation": "Top Side",}]){"checkQty": 1492}
+Check_WaistBand- if(qcStationDetails[{"qcStationId": 1,
+        "qcStation": "WaistBand",}]){"checkQty": 1492}
+Final QcStation- finalQcStationName
+Pass Qnt - pass */}
+  
+
+
+
+
+
+
+ 

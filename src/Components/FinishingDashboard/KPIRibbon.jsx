@@ -1,46 +1,43 @@
-import {
-  Target,
-  Activity,
-  RefreshCw,
-  Package,
-  AlertTriangle,
-  CheckCircle2,
-  BarChart3,
-  TrendingUp,
-  Clock,
-} from 'lucide-react';
+import { Target, TrendingUp, RefreshCw, Package, ShieldAlert, RotateCcw, Award, Activity, PercentCircle } from 'lucide-react';
 
 const kpiData = [
-  { icon: Target, label: 'Today Target', value: '295,000', footer: 'Target: 100%', color: 'text-blue-400', iconBg: 'bg-blue-500/20' },
-  { icon: Activity, label: 'Today Output', value: '178,450', footer: 'Target: 60.00%', color: 'text-brand-green', iconBg: 'bg-green-500/20' },
-  { icon: Package, label: 'Total WIP', value: '45,230', footer: 'Balanced', color: 'text-yellow-400', iconBg: 'bg-yellow-500/20' },
-  { icon: CheckCircle2, label: 'Finishing EFF%', value: '72.5%', footer: 'Target: 75.00%', color: 'text-brand-amber', iconBg: 'bg-amber-500/20' },
-  { icon: AlertTriangle, label: 'DHU%', value: '4.82%', footer: 'Target: <5.00%', color: 'text-brand-green', iconBg: 'bg-green-500/20' },
-  { icon: RefreshCw, label: 'Rework%', value: '2.15%', footer: 'Target: <3.00%', color: 'text-brand-green', iconBg: 'bg-green-500/20' },
-  { icon: BarChart3, label: 'Ship Target', value: '260,000', footer: 'Target: 88.00%', color: 'text-purple-400', iconBg: 'bg-purple-500/20' },
-  { icon: TrendingUp, label: 'Ship Done', value: '195,200', footer: 'Target: 75.08%', color: 'text-cyan-400', iconBg: 'bg-cyan-500/20' },
-  { icon: Clock, label: 'Pending Order', value: '12', footer: '3 Critical', color: 'text-brand-red', iconBg: 'bg-red-500/20' },
+  { icon: Target, label: 'Target Qty', value: '295,000', target: null, color: 'text-neon-cyan', iconBg: 'bg-neon-cyan/20' },
+   { icon: Award, label: 'Input QTY', value: '591,125', target: 'Target ≥ 95%', color: 'text-status-green', iconBg: 'bg-status-green/20' },
+   { icon: Award, label: 'Shade OK', value: '4,125', target: 'Target ≥ 95%', color: 'text-status-green', iconBg: 'bg-status-green/20' },
+   { icon: TrendingUp, label: 'Finishing Qty', value: '182,746', target: null, color: 'text-neon-cyan', iconBg: 'bg-neon-cyan/20' }, 
+   { icon: TrendingUp, label: 'Pack Qty', value: '182,746', target: null, color: 'text-neon-cyan', iconBg: 'bg-neon-cyan/20' }, 
+
+  { icon: PercentCircle, label: 'Efficiency %', value: '62.35%', target: 'Target 60.00%', color: 'text-status-green', iconBg: 'bg-status-green/20' },
+  { icon: ShieldAlert, label: 'DHU % (Final)', value: '2.62%', target: 'Target ≤ 3%', color: 'text-status-green', iconBg: 'bg-status-green/20' },
+
+  { icon: Package, label: 'Rewash Qty', value: '48,350', target: '3.62% of Output', color: 'text-neon-blue', iconBg: 'bg-neon-blue/20' },
+  { icon: Package, label: 'Reject Qty', value: '48,350', target: '3.62% of Output', color: 'text-neon-blue', iconBg: 'bg-red' },
+
+  // { icon: Activity, label: 'Achievement', value: '91.75%', target: 'Target ≥ 97%', color: 'text-status-amber', iconBg: 'bg-status-amber/20' },
+  { icon: Target, label: 'Remaining TGT', value: '112,254', target: '37.98% Pending', color: 'text-slate-400', iconBg: 'bg-slate-600/20' },
 ];
 
-const KPICard = ({ icon: Icon, label, value, footer, color, iconBg }) => {
+const KPICard = ({ icon: Icon, label, value, target, color, iconBg }) => {
   return (
-    <div className="bg-card-bg border border-border-stroke rounded-lg p-3 hover:border-slate-600 transition-colors">
-      <div className="flex items-center gap-1.5 mb-2">
-        <div className={`w-5 h-5 ${iconBg} rounded flex items-center justify-center`}>
-          <Icon size={10} className={color} />
+    <div className="bg-card-dark border border-neon-cyan/20 rounded-lg p-3 hover:border-neon-cyan/40 transition-all shadow-glow-cyan/20">
+      <div className="flex items-center gap-4 mb-2">
+        <div className={`w-8 h-8 ${iconBg} rounded flex items-center justify-center`}>
+          <Icon size={14} className={color} />
         </div>
-        <span className="text-xxs text-slate-400 font-medium uppercase tracking-wider">{label}</span>
+        <span className="text-sm text-slate-300 font-bold uppercase tracking-wider ">{label}</span>
       </div>
-      <div className="text-xl font-bold text-white text-center">{value}</div>
-      <div className={`text-xxs text-center mt-1 font-medium ${color}`}>{footer}</div>
+      <div className="text-2xl font-bold text-white text-center mb-1">{value}</div>
+      {/* {target && (
+        <div className={`text-xxs text-center font-medium ${color}`}>{target}</div>
+      )} */}
     </div>
   );
 };
 
 const KPIRibbon = () => {
   return (
-    <div className="px-6 py-3">
-      <div className="grid grid-cols-9 gap-3">
+    <div className="px-6 py-1 bg-card-dark/50">
+      <div className="grid grid-cols-10 gap-3">
         {kpiData.map((kpi) => (
           <KPICard key={kpi.label} {...kpi} />
         ))}

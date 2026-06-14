@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef, useCallback } from 'react';
-import { getLineUnitPlant, getLineWiseDetails, getCumulative, getPoDetails, getIssueDetails } from '../../apis/api';
+import { getLineUnitPlant, getLineWiseDetails, getCumulative, getIssueDetails, getHourlyLineDetails } from '../../apis/api';
 
 const FilterContext = createContext();
 
@@ -30,12 +30,14 @@ export const FilterProvider = ({ children }) => {
   const [dashboardData, setDashboardData] = useState({
     cumulative: null,
     lineWiseDetails: [],
-    poDetails: [],
-    issueDetails: []
+    issueDetails: [],
+    hourlyLineDetails: []
   });
 
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(false);
+  const [manualTrigger, setManualTrigger] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const filtersRef = useRef(filters);
   filtersRef.current = filters;
   const requestIdRef = useRef(0);
@@ -78,11 +80,11 @@ export const FilterProvider = ({ children }) => {
       if (current.unit.length > 0) baseParams.UnitIds = current.unit.map(Number);
       if (current.sewingLine.length > 0) baseParams.SewingLineIds = current.sewingLine.map(Number);
 
-      const [cumulativeRes, lineWiseRes, poRes, issueRes] = await Promise.allSettled([
+      const [cumulativeRes, lineWiseRes, issueRes, hourlyRes] = await Promise.allSettled([
         getCumulative(baseParams),
         getLineWiseDetails(baseParams),
-        getPoDetails(baseParams),
-        getIssueDetails(baseParams)
+        getIssueDetails(baseParams),
+        getHourlyLineDetails(baseParams)
       ]);
 
       if (requestIdRef.current !== reqId) return;
@@ -90,8 +92,8 @@ export const FilterProvider = ({ children }) => {
       setDashboardData({
         cumulative: cumulativeRes.status === 'fulfilled' ? cumulativeRes.value : null,
         lineWiseDetails: lineWiseRes.status === 'fulfilled' ? (lineWiseRes.value || []) : [],
-        poDetails: poRes.status === 'fulfilled' ? (poRes.value || []) : [],
-        issueDetails: issueRes.status === 'fulfilled' ? (issueRes.value || []) : []
+        issueDetails: issueRes.status === 'fulfilled' ? (issueRes.value || []) : [],
+        hourlyLineDetails: hourlyRes.status === 'fulfilled' ? (hourlyRes.value || []) : []
       });
     } catch (error) {
       console.error('Error loading dashboard data:', error);
@@ -103,13 +105,15 @@ export const FilterProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (!loading) {
+    if (!loading && (manualTrigger || !hasLoaded)) {
       fetchDashboardData();
+      setManualTrigger(false);
+      setHasLoaded(true);
     }
-  }, [filters, loading, fetchDashboardData]);
+  }, [filters, loading, fetchDashboardData, manualTrigger, hasLoaded]);
 
   return (
-    <FilterContext.Provider value={{ filters, setFilters, filterOptions, loading, dataLoading, dashboardData, fetchDashboardData }}>
+    <FilterContext.Provider value={{ filters, setFilters, filterOptions, loading, dataLoading, dashboardData, fetchDashboardData, setManualTrigger }}>
       {children}
     </FilterContext.Provider>
   );
