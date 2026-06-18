@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { LogIn, Lock, User } from 'lucide-react';
@@ -8,8 +8,21 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('rememberedCredentials');
+    if (saved) {
+      try {
+        const { userName: u, password: p } = JSON.parse(saved);
+        setUserName(u);
+        setPassword(p);
+        setRememberMe(true);
+      } catch { /* ignore */ }
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +35,11 @@ export default function LoginPage() {
     const result = await login(userName.trim(), password);
     setLoading(false);
     if (result.success) {
+      if (rememberMe) {
+        localStorage.setItem('rememberedCredentials', JSON.stringify({ userName: userName.trim(), password }));
+      } else {
+        localStorage.removeItem('rememberedCredentials');
+      }
       navigate('/');
     } else {
       setError(result.message);
@@ -74,6 +92,17 @@ export default function LoginPage() {
                   placeholder="Enter password"
                 />
               </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={e => setRememberMe(e.target.checked)}
+                className="w-3.5 h-3.5 rounded border-white/30 bg-transparent accent-sky-500 cursor-pointer"
+              />
+              <label htmlFor="rememberMe" className="text-xs text-white/50 cursor-pointer select-none">Remember me</label>
             </div>
 
             <button

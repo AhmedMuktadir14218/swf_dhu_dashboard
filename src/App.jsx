@@ -5,6 +5,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 import LoginPage from './Pages/Auth/LoginPage';
 import SewingDashboard from './Pages/SewingDashboard/SewingDashboard';
 import UserManagement from './Pages/Admin/UserManagement';
+import PoDetailsSewing from './Pages/SewingDashboard/PoDetailsSewing';
 
 function AppRoutes() {
   const { token, loading } = useAuth();
@@ -23,6 +24,7 @@ function AppRoutes() {
       <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
         <Route index element={<SewingDashboard />} />
         <Route path="admin/users" element={<ProtectedRoute adminOnly><UserManagement /></ProtectedRoute>} />
+        <Route path="/po-details" element={<PoDetailsSewing />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

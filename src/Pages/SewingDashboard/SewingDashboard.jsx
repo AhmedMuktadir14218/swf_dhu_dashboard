@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { FilterProvider, useFilter } from '../../Components/SewingDashboard/FilterContext';
 import Header from '../../Components/SewingDashboard/Header';
 import FilterBar from '../../Components/SewingDashboard/FilterBar';
@@ -19,7 +20,20 @@ const Spinner = () => (
 );
 
 const DashboardContent = () => {
-  const { dataLoading } = useFilter();
+  const { dataLoading, fetchTrigger, fetchDashboardData } = useFilter();
+
+  useEffect(() => {
+    if (fetchTrigger === 0) return;
+    fetchDashboardData();
+  }, [fetchTrigger, fetchDashboardData]);
+
+  useEffect(() => {
+    if (fetchTrigger === 0) return;
+    const interval = setInterval(() => {
+      fetchDashboardData(true);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [fetchTrigger, fetchDashboardData]);
 
   return (
     <div className="h-screen overflow-hidden bg-[#071a33] text-white font-sans relative">

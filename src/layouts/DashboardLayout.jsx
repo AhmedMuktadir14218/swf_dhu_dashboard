@@ -11,15 +11,16 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },
+  { to: '/', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },  
+  { to: '/po-details', label: 'PO Details', icon: Factory, adminOnly: false },
   { to: '/admin/users', label: 'User Management', icon: Users, adminOnly: true },
-  // { to: '/admin/plants', label: 'Plant Setup', icon: Factory, adminOnly: true },
+
 ];
 
 export default function DashboardLayout() {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   const handleLogout = () => {
     logout();

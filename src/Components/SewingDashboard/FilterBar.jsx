@@ -146,10 +146,10 @@ const DateInput = ({ label, value, onChange }) => (
 );
 
 export default function FilterBar() {
-  const { filters, setFilters, filterOptions, loading, dataLoading, setManualTrigger } = useFilter();
+  const { filters, setFilters, filterOptions, loading, handleApply } = useFilter();
 
   const handleSearch = () => {
-    setManualTrigger(true);
+    handleApply();
   };
 
   const togglePlant = (id) => {
@@ -271,11 +271,10 @@ export default function FilterBar() {
       <div className="flex flex-col justify-end">
         <button
           onClick={handleSearch}
-          disabled={dataLoading}
-          className="h-7 px-3 rounded-md border border-white/15 bg-[#0f1d36] text-white/90 hover:bg-[#142244] hover:border-white/25 transition-all duration-150 disabled:opacity-50 cursor-pointer flex items-center gap-1.5"
+          className="h-7 px-3 rounded-md border border-white/15 bg-[#0f1d36] text-white/90 hover:bg-[#142244] hover:border-white/25 transition-all duration-150 cursor-pointer flex items-center gap-1.5"
           title="Apply filter"
         >
-          <Search className={`w-3.5 h-3.5 text-sky-400 ${dataLoading ? 'animate-pulse' : ''}`} />
+          <Search className="w-3.5 h-3.5 text-sky-400" />
           <span className="text-[12px]">Apply</span>
         </button>
       </div>

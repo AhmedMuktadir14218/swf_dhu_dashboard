@@ -93,7 +93,7 @@ const apiRequest = async (endpoint, method, body = null, retries = 1) => {
 
 export const getLineUnitPlant = () => apiGet('/User/get-line-unit-plant', {}, 2, true);
 
-const dashboardArrayOptions = { arrayFormat: 'comma' };
+const dashboardArrayOptions = { arrayFormat: 'repeat' };
 
 export const getLineWiseDetails = (params) => apiGet('/api/dashboard/line-wise-details', params, 2, false, dashboardArrayOptions);
 

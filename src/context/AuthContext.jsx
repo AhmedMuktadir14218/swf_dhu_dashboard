@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
     if (res && res.token) {
       localStorage.setItem('token', res.token);
       localStorage.setItem('user', JSON.stringify(res));
+      localStorage.removeItem('assignments');
       setToken(res.token);
       setUser(res);
       return { success: true };
@@ -38,6 +39,8 @@ export const AuthProvider = ({ children }) => {
   const logout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('assignments');
+    localStorage.removeItem('rememberedCredentials');
     setToken(null);
     setUser(null);
   }, []);

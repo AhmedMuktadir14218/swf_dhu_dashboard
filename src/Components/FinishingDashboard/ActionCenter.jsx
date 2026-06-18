@@ -6,7 +6,7 @@ const alerts = [
   { severity: 'high', message: 'Iron section output 15% below hourly target', time: '15 min ago', line: 'Line-5' },
   { severity: 'high', message: 'Stain defect spike detected — 42 units in last hour', time: '22 min ago', line: 'Line-2' },
   { severity: 'medium', message: 'Line-4 operator shortage — 2 absentees today', time: '45 min ago', line: 'Line-4' },
-  { severity: 'low', message: 'Packaging material running low for Order #ORD-1002', time: '1 hr ago', line: 'Common' },
+  { severity: 'low', message: 'Packaging material running low for Order #ORD-1002 ', time: '1 hr ago', line: 'Common' },
 ];
 
 const severityColors = {
@@ -49,7 +49,14 @@ const ActionCenter = () => {
                   </span>
                   <span className="text-xxs text-slate-500">{alert.line}</span>
                 </div>
-                <p className="text-xs text-slate-200 leading-relaxed">{alert.message}</p>
+                <p className="text-xs text-slate-200 leading-relaxed">{alert.message}
+                  
+            Some people believe that university students should only study subjects that are directly useful for their future careers, such as science, technology, or business. Others argue that they should be free to study any subject they enjoy, regardless of its job prospects.
+
+Discuss both these views and give your opinion.
+
+Give reasons for your answer and include any relevant examples from your own knowledge or experience.
+                </p>
               </div>
               <div className="flex items-center gap-1 text-slate-500 flex-shrink-0">
                 <Clock size={10} />

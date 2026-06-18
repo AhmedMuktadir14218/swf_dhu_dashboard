@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect, useRef, useCallback } from 'react';
-import { getLineUnitPlant, getLineWiseDetails, getCumulative, getIssueDetails, getHourlyLineDetails } from '../../apis/api';
+import { getUserAssigns, getLineWiseDetails, getCumulative, getIssueDetails, getHourlyLineDetails } from '../../apis/api';
 
 const FilterContext = createContext();
 
@@ -36,25 +36,46 @@ export const FilterProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
   const [dataLoading, setDataLoading] = useState(false);
-  const [manualTrigger, setManualTrigger] = useState(false);
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [fetchTrigger, setFetchTrigger] = useState(0);
   const filtersRef = useRef(filters);
   filtersRef.current = filters;
   const requestIdRef = useRef(0);
+  const initialLoadRef = useRef(false);
 
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
-        const data = await getLineUnitPlant();
-        if (!data) return;
-        const uniquePlants = [...new Map(data.map(item => [item.factoryId, { id: item.factoryId, name: item.factoryName }])).values()];
-        const uniqueUnits = [...new Map(data.map(item => [item.unitId, { id: item.unitId, name: item.unitName, factoryId: item.factoryId }])).values()];
-        const uniqueLines = [...new Map(data.map(item => [item.sewingLineId, { id: item.sewingLineId, name: item.sewingLineName, unitId: item.unitId, factoryId: item.factoryId }])).values()];
+        const storedUser = localStorage.getItem('user');
+        if (!storedUser) { setLoading(false); return; }
+        const user = JSON.parse(storedUser);
+        const userId = user.id || user.userId;
+        if (!userId) { setLoading(false); return; }
+
+        let assignments = [];
+        const assignData = await getUserAssigns(userId);
+        if (assignData && Array.isArray(assignData)) {
+          assignments = assignData;
+          localStorage.setItem('assignments', JSON.stringify(assignData));
+        }
+
+        if (assignments.length === 0) { setLoading(false); return; }
+
+        const uniquePlants = [...new Map(assignments.map(a => [a.factoryId, { id: a.factoryId, name: a.factoryName }])).values()];
+        const uniqueUnits = [...new Map(assignments.map(a => [a.unitId, { id: a.unitId, name: a.unitName, factoryId: a.factoryId }])).values()];
+        const uniqueLines = [...new Map(assignments.map(a => [a.sewingLineId, { id: a.sewingLineId, name: a.sewingLineName, unitId: a.unitId, factoryId: a.factoryId }])).values()];
 
         setFilterOptions({
           plants: uniquePlants,
           units: uniqueUnits,
           sewingLines: uniqueLines
+        });
+
+        setFilters({
+          dateFrom: today,
+          dateTo: today,
+          plant: uniquePlants.map(p => String(p.id)),
+          unit: uniqueUnits.map(u => String(u.id)),
+          sewingLine: uniqueLines.map(l => String(l.id))
         });
       } catch (error) {
         console.error('Error loading filter options:', error);
@@ -66,10 +87,10 @@ export const FilterProvider = ({ children }) => {
     fetchFilterOptions();
   }, []);
 
-  const fetchDashboardData = useCallback(async () => {
+  const fetchDashboardData = useCallback(async (silent = false) => {
     const current = filtersRef.current;
     const reqId = ++requestIdRef.current;
-    setDataLoading(true);
+    if (!silent) setDataLoading(true);
 
     try {
       const baseParams = {
@@ -98,22 +119,25 @@ export const FilterProvider = ({ children }) => {
     } catch (error) {
       console.error('Error loading dashboard data:', error);
     } finally {
-      if (requestIdRef.current === reqId) {
+      if (requestIdRef.current === reqId && !silent) {
         setDataLoading(false);
       }
     }
   }, []);
 
   useEffect(() => {
-    if (!loading && (manualTrigger || !hasLoaded)) {
-      fetchDashboardData();
-      setManualTrigger(false);
-      setHasLoaded(true);
+    if (!loading && !initialLoadRef.current) {
+      initialLoadRef.current = true;
+      setFetchTrigger(t => t + 1);
     }
-  }, [filters, loading, fetchDashboardData, manualTrigger, hasLoaded]);
+  }, [loading]);
+
+  const handleApply = useCallback(() => {
+    setFetchTrigger(t => t + 1);
+  }, []);
 
   return (
-    <FilterContext.Provider value={{ filters, setFilters, filterOptions, loading, dataLoading, dashboardData, fetchDashboardData, setManualTrigger }}>
+    <FilterContext.Provider value={{ filters, setFilters, filterOptions, loading, dataLoading, dashboardData, fetchDashboardData, fetchTrigger, handleApply }}>
       {children}
     </FilterContext.Provider>
   );
