@@ -5,8 +5,10 @@ const runningPOData = {
   delivery: '25 Jun 2026',
   sizes: ['Size-1', 'Size-2', 'Size-3', 'Size-4', 'Size-5', 'Size-6', 'Size-7', 'Size-8', 'Total'],
   orderQty: [300, 320, 400, 200, 250, 250, 250, 100, 2070],
+  
   shadeOk: [250, 270, 150, 150, 250, 250, 250, 75, 1815],
   finishingOut: [45, 50, 250, 250, 250, 50, 895, '-', 1840],
+  packQty: [300, 320, 400, 200, 250, 250, 250, 100, 2070],
   progress: [15, 15.8, 25, 25, 0, 0, 0, 50, 43],
 };
 

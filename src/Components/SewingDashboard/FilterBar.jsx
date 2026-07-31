@@ -72,7 +72,16 @@ const CheckboxDropdownMenu = ({ anchorRect, options, selected, onToggle, onSelec
   );
 };
 
-const MultiSelectDropdown = ({ label, selected, options, onToggleAll, onClear, onToggle, loading }) => {
+const MultiSelectDropdown = ({
+  label,
+  selected,
+  options,
+  onToggleAll,
+  onClear,
+  onToggle,
+  loading,
+  isMediumView = false
+}) => {
   const [open, setOpen] = useState(false);
   const [anchorRect, setAnchorRect] = useState(null);
   const btnRef = useRef(null);
@@ -87,34 +96,53 @@ const MultiSelectDropdown = ({ label, selected, options, onToggleAll, onClear, o
       handleClose();
     } else {
       const rect = btnRef.current.getBoundingClientRect();
-      setAnchorRect({ bottom: rect.bottom, left: rect.left, width: rect.width });
+      setAnchorRect({
+        bottom: rect.bottom,
+        left: rect.left,
+        width: rect.width
+      });
       setOpen(true);
     }
   };
 
   const allSelected = options.length > 0 && selected.length === options.length;
 
-  const displayText = selected.length === 0
-    ? 'All'
-    : selected.length === options.length
+  const displayText =
+    selected.length === 0
       ? 'All'
-      : selected.length === 1
-        ? (options.find(o => String(o.id) === selected[0])?.name || '1 selected')
-        : `${selected.length} selected`;
+      : selected.length === options.length
+        ? 'All'
+        : selected.length === 1
+          ? options.find(o => String(o.id) === selected[0])?.name || '1 selected'
+          : `${selected.length} selected`;
 
   return (
-    <div className="min-w-[110px] flex flex-col">
-      <div className="text-[11px] text-white/70 mb-1 font-semibold tracking-wide uppercase">{label}</div>
+    <div className={`${isMediumView ? 'min-w-[86px]' : 'min-w-[110px]'} flex flex-col`}>
+      <div
+        className={`text-white/70 font-semibold tracking-wide uppercase ${
+          isMediumView ? 'text-[9px] mb-0.5' : 'text-[11px] mb-1'
+        }`}
+      >
+        {label}
+      </div>
+
       <button
         ref={btnRef}
         type="button"
         disabled={loading}
         onClick={toggle}
-        className="h-7 rounded-md border border-white/15 bg-[#0f1d36] px-2.5 flex items-center justify-between text-[12px] text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 disabled:opacity-50"
+        className={`${
+          isMediumView ? 'h-6 px-1.5 text-[10px]' : 'h-7 px-2.5 text-[12px]'
+        } rounded-md border border-white/15 bg-[#0f1d36] flex items-center justify-between text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 disabled:opacity-50`}
       >
         <span className="truncate">{displayText}</span>
-        <ChevronDown className={`w-3 h-3 text-white/50 ml-1.5 shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown
+          className={`text-white/50 shrink-0 transition-transform duration-200 ${
+            isMediumView ? 'w-2.5 h-2.5 ml-1' : 'w-3 h-3 ml-1.5'
+          } ${open ? 'rotate-180' : ''}`}
+        />
       </button>
+
       {open && anchorRect && (
         <CheckboxDropdownMenu
           anchorRect={anchorRect}
@@ -131,21 +159,30 @@ const MultiSelectDropdown = ({ label, selected, options, onToggleAll, onClear, o
   );
 };
 
-const DateInput = ({ label, value, onChange }) => (
-  <div className="min-w-[130px] flex flex-col">
-    <div className="text-[11px] text-white/70 mb-1 font-semibold tracking-wide uppercase">{label}</div>
+const DateInput = ({ label, value, onChange, isMediumView = false }) => (
+  <div className={`${isMediumView ? 'min-w-[96px]' : 'min-w-[130px]'} flex flex-col`}>
+    <div
+      className={`text-white/70 font-semibold tracking-wide uppercase ${
+        isMediumView ? 'text-[9px] mb-0.5' : 'text-[11px] mb-1'
+      }`}
+    >
+      {label}
+    </div>
+
     <div className="relative">
       <input
         type="date"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="h-7 w-full rounded-md border border-white/15 bg-[#0f1d36] px-2.5 pr-2 text-[12px] text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 outline-none focus:border-sky-500/50 [color-scheme:dark]"
+        onChange={e => onChange(e.target.value)}
+        className={`${
+          isMediumView ? 'h-6 px-1.5 text-[10px]' : 'h-7 px-2.5 text-[12px]'
+        } w-full rounded-md border border-white/15 bg-[#0f1d36] pr-1 text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 outline-none focus:border-sky-500/50 [color-scheme:dark]`}
       />
     </div>
   </div>
 );
 
-export default function FilterBar() {
+export default function FilterBar({ isMediumView, showSearch = false }) {
   const { filters, setFilters, filterOptions, loading, handleApply } = useFilter();
 
   const handleSearch = () => {
@@ -226,58 +263,108 @@ export default function FilterBar() {
     setFilters(prev => ({ ...prev, sewingLine: [] }));
   };
 
-  return (
-    <div className="flex flex-nowrap items-end justify-center gap-3 w-full">
-      <DateInput
-        label="From"
-        value={filters.dateFrom}
-        onChange={(v) => setFilters(prev => ({ ...prev, dateFrom: v }))}
-      />
-      <div className="flex flex-col justify-end">
-        <div className="h-7 flex items-center text-white/40 text-[12px] font-medium">to</div>
-      </div>
-      <DateInput
-        label="To"
-        value={filters.dateTo}
-        onChange={(v) => setFilters(prev => ({ ...prev, dateTo: v }))}
-      />
-      <MultiSelectDropdown
-        label="Plant"
-        selected={filters.plant}
-        options={filterOptions.plants}
-        onToggle={togglePlant}
-        onToggleAll={toggleAllPlants}
-        onClear={clearPlants}
-        loading={loading}
-      />
-      <MultiSelectDropdown
-        label="Unit"
-        selected={filters.unit}
-        options={filteredUnits}
-        onToggle={toggleUnit}
-        onToggleAll={toggleAllUnits}
-        onClear={clearUnits}
-        loading={loading}
-      />
-      <MultiSelectDropdown
-        label="Line"
-        selected={filters.sewingLine}
-        options={filteredLines}
-        onToggle={toggleLine}
-        onToggleAll={toggleAllLines}
-        onClear={clearLines}
-        loading={loading}
-      />
-      <div className="flex flex-col justify-end">
-        <button
-          onClick={handleSearch}
-          className="h-7 px-3 rounded-md border border-white/15 bg-[#0f1d36] text-white/90 hover:bg-[#142244] hover:border-white/25 transition-all duration-150 cursor-pointer flex items-center gap-1.5"
-          title="Apply filter"
-        >
-          <Search className="w-3.5 h-3.5 text-sky-400" />
-          <span className="text-[12px]">Apply</span>
-        </button>
+return (
+  <div
+    className={`flex flex-nowrap items-end justify-center w-full ${
+      isMediumView ? 'gap-1.5' : 'gap-3'
+    }`}
+  >
+    <DateInput
+      label="From"
+      value={filters.dateFrom}
+      onChange={v => setFilters(prev => ({ ...prev, dateFrom: v }))}
+      isMediumView={isMediumView}
+    />
+
+    <div className="flex flex-col justify-end">
+      <div
+        className={`flex items-center text-white/40 font-medium ${
+          isMediumView ? 'h-6 text-[10px]' : 'h-7 text-[12px]'
+        }`}
+      >
+        to
       </div>
     </div>
-  );
+
+    <DateInput
+      label="To"
+      value={filters.dateTo}
+      onChange={v => setFilters(prev => ({ ...prev, dateTo: v }))}
+      isMediumView={isMediumView}
+    />
+
+    <MultiSelectDropdown
+      label="Plant"
+      selected={filters.plant}
+      options={filterOptions.plants}
+      onToggle={togglePlant}
+      onToggleAll={toggleAllPlants}
+      onClear={clearPlants}
+      loading={loading}
+      isMediumView={isMediumView}
+    />
+
+    <MultiSelectDropdown
+      label="Unit"
+      selected={filters.unit}
+      options={filteredUnits}
+      onToggle={toggleUnit}
+      onToggleAll={toggleAllUnits}
+      onClear={clearUnits}
+      loading={loading}
+      isMediumView={isMediumView}
+    />
+
+    <MultiSelectDropdown
+      label="Line"
+      selected={filters.sewingLine}
+      options={filteredLines}
+      onToggle={toggleLine}
+      onToggleAll={toggleAllLines}
+      onClear={clearLines}
+      loading={loading}
+      isMediumView={isMediumView}
+    />
+
+    {showSearch && (
+    <div className={`${isMediumView ? 'min-w-[100px]' : 'min-w-[140px]'} flex flex-col`}>
+      <div
+        className={`text-white/70 font-semibold tracking-wide uppercase ${
+          isMediumView ? 'text-[9px] mb-0.5' : 'text-[11px] mb-1'
+        }`}
+      >
+        Search
+      </div>
+      <input
+        type="text"
+        value={filters.search}
+        onChange={e => setFilters(prev => ({ ...prev, search: e.target.value }))}
+        placeholder="PO / Style..."
+        className={`${
+          isMediumView ? 'h-6 px-1.5 text-[10px]' : 'h-7 px-2.5 text-[12px]'
+        } w-full rounded-md border border-white/15 bg-[#0f1d36] text-white/90 placeholder:text-white/30 cursor-text hover:bg-[#142244] hover:border-white/25 transition-all duration-150 outline-none focus:border-sky-500/50`}
+      />
+    </div>
+    )}
+
+    <div className="flex flex-col justify-end">
+      <button
+        onClick={handleSearch}
+        className={`${
+          isMediumView ? 'h-6 px-2' : 'h-7 px-3'
+        } rounded-md border border-white/15 bg-[#0f1d36] text-white/90 hover:bg-[#142244] hover:border-white/25 transition-all duration-150 cursor-pointer flex items-center gap-1`}
+        title="Apply filter"
+      >
+        <Search
+          className={`text-sky-400 ${
+            isMediumView ? 'w-3 h-3' : 'w-3.5 h-3.5'
+          }`}
+        />
+        <span className={isMediumView ? 'text-[10px]' : 'text-[12px]'}>
+          Apply
+        </span>
+      </button>
+    </div>
+  </div>
+);
 }

@@ -37,6 +37,7 @@ const STATIC_HEADERS = [
 const FINAL_HEADERS = [
   { label: 'Final QC', id: 'finalQc' },
   { label: 'Output Qty', id: 'passQty' },
+  { label: 'Total Output', id: 'finalWholePassQty' },
   { label: 'Check Qty', id: 'checkQty' },
   { label: 'Total Check', id: 'totalCheck' },
   { label: 'WIP', id: 'wip' },
@@ -69,6 +70,7 @@ const PoDetailsContent = () => {
     if (current.plant.length > 0) params.FactoryIds = current.plant.map(Number);
     if (current.unit.length > 0) params.UnitIds = current.unit.map(Number);
     if (current.sewingLine.length > 0) params.SewingLineIds = current.sewingLine.map(Number);
+    if (current.search && current.search.trim()) params.Search = current.search.trim();
 
     const res = await getPoDetails(params);
     if (res) {
@@ -124,12 +126,16 @@ const PoDetailsContent = () => {
     const dateSet = new Set();
     const stationMap = new Map();
     const matrix = {};
+    const passMatrix = {};
 
     details.forEach(d => {
       dateSet.add(d.qcDate);
       stationMap.set(d.qcStationId, d.qcStation);
       if (!matrix[d.qcDate]) matrix[d.qcDate] = {};
       matrix[d.qcDate][d.qcStation] = d.checkQty;
+      if (d.qcStationId === selectedRow.finalSewingQcStationId) {
+        passMatrix[d.qcDate] = d.passQty;
+      }
     });
 
     const dates = Array.from(dateSet).sort();
@@ -137,7 +143,7 @@ const PoDetailsContent = () => {
       .sort((a, b) => a[0] - b[0])
       .map(([, name]) => name);
 
-    return { dates, stations, matrix };
+    return { dates, stations, matrix, passMatrix };
   }, [selectedRow]);
 
   const lineInDetails = Array.isArray(selectedRow?.lineInDetails) ? selectedRow.lineInDetails : [];
@@ -156,15 +162,15 @@ const PoDetailsContent = () => {
   return (
     <div className="h-screen overflow-hidden bg-[#071a33] text-white font-sans relative">
 
-      <div className="h-[7%] shrink-0 max-w-[1800px] mx-auto w-full px-1 pt-1 mb-1">
+      <div className="h-[7%] shrink-0 max-w-[2000px] mx-auto w-full px-1 pt-1 mb-1">
         <div className="rounded-lg border border-white/15 bg-[#0a1f3d] px-3 py-1 shadow-md overflow-hidden h-full">
           <div className="flex items-center justify-center w-full h-full">
-            <FilterBar />
+            <FilterBar showSearch />
           </div>
         </div>
       </div>
 
-      <div className="relative max-w-[1800px] mx-auto w-full flex-1 px-1 pb-1">
+      <div className="relative max-w-[2000px] mx-auto w-full flex-1 px-1 pb-1">
         <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden flex flex-col h-[calc(100vh-6vh)]">
 
           <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-[#071A33] shrink-0">
@@ -258,31 +264,59 @@ const PoDetailsContent = () => {
                         <thead className="bg-[#11458b] sticky top-0 z-10">
                           <tr>
                             <th className="px-3 py-1.5 border border-white/10 text-left">QC Date</th>
+                            
                             {pivotData.stations.map(station => (
                               <th key={station} className="px-3 py-1.5 border border-white/10 text-right whitespace-nowrap">{station}</th>
                             ))}
+                            <th className="px-3 py-1.5 border border-white/10 text-right whitespace-nowrap">Pass Qty</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          {pivotData.dates.length === 0 ? (
-                            <tr>
-                              <td colSpan={pivotData.stations.length + 1} className="px-3 py-4 text-center text-white/40 border border-white/10">No data</td>
-                            </tr>
-                          ) : (
-                            pivotData.dates.map(date => (
-                              <tr key={date} className="odd:bg-[#0c2647] even:bg-[#0a203c]">
-                                <td className="px-3 py-1.5 border border-white/10">{formatDate(date)}</td>
-                                {pivotData.stations.map(station => (
-                                  <td key={station} className="px-3 py-1.5 border border-white/10 text-right">
-                                    {pivotData.matrix[date]?.[station] != null
-                                      ? formatNum(pivotData.matrix[date][station])
-                                      : '-'}
-                                  </td>
+                         <tbody>
+                           {pivotData.dates.length === 0 ? (
+                             <tr>
+                               <td colSpan={pivotData.stations.length + 2} className="px-3 py-4 text-center text-white/40 border border-white/10">No data</td>
+                             </tr>
+                           ) : (
+                             <>
+                                {pivotData.dates.map(date => (
+                                  <tr key={date} className="odd:bg-[#0c2647] even:bg-[#0a203c]">
+                                    <td className="px-3 py-1.5 border border-white/10">{formatDate(date)}</td>
+                                    {pivotData.stations.map(station => (
+                                      <td key={station} className="px-3 py-1.5 border border-white/10 text-right">
+                                        {pivotData.matrix[date]?.[station] != null
+                                          ? formatNum(pivotData.matrix[date][station])
+                                          : '-'}
+                                      </td>
+                                    ))}
+                                    <td className="px-3 py-1.5 border border-white/10 text-right font-semibold text-green-400">
+                                      {pivotData.passMatrix[date] != null ? formatNum(pivotData.passMatrix[date]) : '-'}
+                                    </td>
+                                  </tr>
                                 ))}
-                              </tr>
-                            ))
-                          )}
-                        </tbody>
+                               <tr className="bg-[#0f2d5a] font-bold">
+                                 <td className="px-3 py-1.5 border border-white/10">Total</td>
+                                 {pivotData.stations.map(station => (
+                                   <td key={station} className="px-3 py-1.5 border border-white/10 text-right">
+                                     {formatNum(
+                                       pivotData.dates.reduce((sum, date) => {
+                                         const val = pivotData.matrix[date]?.[station];
+                                         return sum + (val != null ? val : 0);
+                                       }, 0)
+                                     )}
+                                   </td>
+                                  ))}
+                                  <td className="px-3 py-1.5 border border-white/10 text-right font-bold text-green-400">
+                                    {formatNum(
+                                      pivotData.dates.reduce((sum, date) => {
+                                        const val = pivotData.passMatrix[date];
+                                        return sum + (val != null ? val : 0);
+                                      }, 0)
+                                    )}
+                                  </td>
+                                </tr>
+                             </>
+                           )}
+                         </tbody>
                       </table>
                     </div>
                   </div>
@@ -360,6 +394,7 @@ const PoDetailsContent = () => {
                         ))}
                         <td className="px-2 py-1 border border-white/10 text-center">{row.finalQcStationName || '-'}</td>
                         <td className="px-2 py-1 border border-white/10 text-center font-semibold text-green-400">{formatNum(row.passQty)}</td>
+                        <td className="px-2 py-1 border border-white/10 text-center font-semibold text-green-400">{formatNum(row.finalWholePassQty)}</td>
                         <td className="px-2 py-1 border border-white/10 text-center font-semibold text-sky-300">
                           {formatNum(getFinalStationValue(row, 'checkQty'))}
                         </td>
@@ -433,3 +468,4 @@ const PoDetailsSewing = () => {
 };
 
 export default PoDetailsSewing;
+

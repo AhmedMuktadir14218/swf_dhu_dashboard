@@ -1,0 +1,712 @@
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 820px) {
+  .dashboard-ipad-lg-compact .rounded-lg {
+    border-radius: 0.375rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .p-4 {
+    padding: 0.5rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .p-3 {
+    padding: 0.375rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .p-2 {
+    padding: 0.25rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .px-4 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .px-3 {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .py-3 {
+    padding-top: 0.375rem !important;
+    padding-bottom: 0.375rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .py-2 {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .py-1 {
+    padding-top: 0.125rem !important;
+    padding-bottom: 0.125rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .mb-3 {
+    margin-bottom: 0.375rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .mb-2 {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .gap-4 {
+    gap: 0.5rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .gap-3 {
+    gap: 0.375rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .gap-2 {
+    gap: 0.25rem !important;
+  }
+
+  .dashboard-ipad-lg-compact .text-sm {
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+  }
+
+  .dashboard-ipad-lg-compact .text-xs {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+
+  .dashboard-ipad-lg-compact table th,
+  .dashboard-ipad-lg-compact table td {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .recharts-text,
+  .dashboard-ipad-lg-compact .recharts-label,
+  .dashboard-ipad-lg-compact .recharts-legend-item-text {
+    font-size: 9px !important;
+  }
+}
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 820px) and (min-height: 600px) {
+  /*
+    KPI Ribbon compact mode
+    Target: iPad 4 landscape / 1024 x 768
+  */
+
+  .dashboard-ipad-lg-compact .kpi-ribbon {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .kpi-card {
+    min-height: 48px !important;
+    padding: 4px 5px !important;
+    gap: 4px !important;
+    border-radius: 6px !important;
+  }
+
+  .dashboard-ipad-lg-compact .kpi-icon-ring {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 1px !important;
+  }
+
+  .dashboard-ipad-lg-compact .kpi-icon {
+    width: 13px !important;
+    height: 13px !important;
+  }
+
+  .dashboard-ipad-lg-compact .kpi-title {
+    font-size: 8px !important;
+    line-height: 1 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .dashboard-ipad-lg-compact .kpi-value {
+    font-size: 14px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .kpi-subtitle {
+    font-size: 8px !important;
+    line-height: 1 !important;
+    margin-top: 1px !important;
+  }
+
+  /*
+    Defect Analysis compact mode
+  */
+
+  .dashboard-ipad-lg-compact .defect-analysis-card {
+    --defect-header-h: 20px;
+    --defect-sticky-col-w: 58px;
+    --defect-defects-col-w: 48px;
+    --defect-pct-col-w: 82px;
+
+    border-radius: 6px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .defect-analysis-title {
+    padding: 2px 6px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+
+  .dashboard-ipad-lg-compact .defect-analysis-scroll {
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .defect-analysis-table {
+    min-width: 430px !important;
+    font-size: 9px !important;
+  }
+
+  .dashboard-ipad-lg-compact .defect-th,
+  .dashboard-ipad-lg-compact .defect-td {
+    padding: 2px 3px !important;
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-ipad-lg-compact .defect-empty {
+    padding: 10px 6px !important;
+    font-size: 9px !important;
+  }
+
+  /*
+    Alert Feed compact mode
+  */
+
+  .dashboard-ipad-lg-compact .alert-feed-card {
+    border-radius: 6px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-header {
+    padding: 2px 6px !important;
+    min-height: 20px !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-title {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-count {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-list {
+    padding: 2px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-list > * + * {
+    margin-top: 2px !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-item {
+    padding: 3px 4px !important;
+    gap: 4px !important;
+    border-radius: 4px !important;
+    min-height: 26px !important;
+    align-items: flex-start !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-icon {
+    width: 12px !important;
+    height: 12px !important;
+    margin-top: 1px !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-item-title {
+    font-size: 9px !important;
+    line-height: 1.1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-desc {
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-badge {
+    font-size: 7px !important;
+    line-height: 1 !important;
+    padding: 2px 4px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .dashboard-ipad-lg-compact .alert-feed-empty {
+    padding: 10px 6px !important;
+    font-size: 9px !important;
+  }
+}
+
+
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 820px)  {
+  /*
+    Pareto Chart compact mode
+    Target: iPad 4 landscape / 1024 x 768
+  */
+
+  .dashboard-ipad-lg-compact .pareto-chart-card {
+    border-radius: 6px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-title {
+    padding: 2px 6px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-body {
+    padding: 2px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-area {
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-area .recharts-wrapper,
+  .dashboard-ipad-lg-compact .pareto-chart-area .recharts-responsive-container {
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-area .recharts-cartesian-axis-tick-value {
+    font-size: 6px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-area .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    font-size: 6px !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-area .recharts-xAxis .recharts-cartesian-axis-tick-value {
+    font-size: 6px !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-legend {
+    gap: 6px !important;
+    font-size: 6px !important;
+    line-height: 1 !important;
+    height: 10px !important;
+    margin-top: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-chart-legend > div {
+    gap: 3px !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-bar-legend {
+    width: 8px !important;
+    height: 4px !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-line-legend {
+    width: 8px !important;
+    height: 1px !important;
+  }
+
+  .dashboard-ipad-lg-compact .pareto-empty {
+    font-size: 9px !important;
+  }
+}
+
+
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 820px) {
+  /*
+    Production Summary compact mode
+    Target: iPad 4 landscape / 1024 x 768
+  */
+
+  .dashboard-ipad-lg-compact .production-summary-card {
+    --production-gauge-size: 78px;
+    --production-gauge-inset: 7px;
+
+    border-radius: 6px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-title {
+    padding: 2px 6px !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-gauge-row {
+    padding: 3px 4px !important;
+    gap: 4px !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-title {
+    font-size: 10px !important;
+    line-height: 1 !important;
+    margin-bottom: 3px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-ring {
+    aspect-ratio: 1 / 1 !important;
+    flex: 0 0 var(--production-gauge-size) !important;
+    width: var(--production-gauge-size) !important;
+    height: var(--production-gauge-size) !important;
+    min-width: var(--production-gauge-size) !important;
+    min-height: var(--production-gauge-size) !important;
+    max-width: var(--production-gauge-size) !important;
+    max-height: var(--production-gauge-size) !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-value {
+    font-size: 14px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-target {
+    font-size: 7px !important;
+    line-height: 1.05 !important;
+    margin-top: 1px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stats {
+    padding: 4px 5px !important;
+    gap: 4px !important;
+    min-height: 34px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat {
+    gap: 3px !important;
+    min-width: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat-icon {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat-label {
+    font-size: 8px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat-value {
+    font-size: 10px !important;
+    line-height: 1 !important;
+  }
+}
+
+
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 660px) {
+  /*
+    Extra-tight Production Summary mode
+    Target: 1024 x 600 and similar short landscape screens
+  */
+
+  .dashboard-ipad-lg-compact .production-summary-card {
+    --production-gauge-size: 58px;
+    --production-gauge-inset: 5px;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-title {
+    padding: 2px 5px !important;
+    font-size: 9px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-gauge-row {
+    padding: 2px 4px !important;
+    gap: 3px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-title {
+    font-size: 8px !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 0.03em !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-value {
+    font-size: 11px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-gauge-target {
+    font-size: 6px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stats {
+    padding: 2px 4px !important;
+    min-height: 26px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat {
+    gap: 2px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat-icon {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat-label {
+    font-size: 7px !important;
+  }
+
+  .dashboard-ipad-lg-compact .production-summary-stat-value {
+    font-size: 8px !important;
+  }
+}
+
+/*
+  Base scroll behavior for Hourly Production Tracker.
+  This part is for all screen sizes.
+*/
+
+.hourly-heatmap-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
+}
+
+.hourly-heatmap-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.hourly-heatmap-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hourly-heatmap-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+
+.hourly-heatmap-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/*
+  Hourly Production compact mode.
+  Target: iPad 4 landscape / 1024 x 768 and similar compact LG screens.
+*/
+
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 820px) {
+  .dashboard-ipad-lg-compact .hourly-heatmap-card {
+    --hourly-line-col-w: 92px;
+    --hourly-hour-col-w: 58px;
+    --hourly-summary-col-w: 68px;
+
+    border-radius: 6px !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-title {
+    padding: 2px 6px !important;
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-scroll {
+    min-height: 0 !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-table {
+    font-size: 8px !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-th,
+  .dashboard-ipad-lg-compact .hourly-td {
+    padding: 2px 3px !important;
+    font-size: 8px !important;
+    line-height: 1.05 !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-line-cell,
+  .dashboard-ipad-lg-compact .hourly-summary-cell {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-hour-cell {
+    white-space: pre-line !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-footer {
+    padding: 2px 5px !important;
+    min-height: 18px !important;
+    gap: 6px !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-legend-item {
+    gap: 3px !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-legend-color {
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-legend-note-full {
+    display: none !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-legend-note-short {
+    display: inline !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-empty {
+    font-size: 9px !important;
+  }
+}
+
+/*
+  Extra-tight height mode.
+  Target: 1024 x 600 and short landscape screens.
+*/
+
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 660px) {
+  .dashboard-ipad-lg-compact .hourly-heatmap-card {
+    --hourly-line-col-w: 80px;
+    --hourly-hour-col-w: 50px;
+    --hourly-summary-col-w: 60px;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-title {
+    padding: 1px 5px !important;
+    font-size: 8px !important;
+    line-height: 1.1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-th,
+  .dashboard-ipad-lg-compact .hourly-td {
+    padding: 1px 2px !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-footer {
+    padding: 1px 4px !important;
+    min-height: 14px !important;
+    gap: 4px !important;
+    font-size: 6px !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-legend-item {
+    gap: 2px !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-legend-color {
+    width: 5px !important;
+    height: 5px !important;
+  }
+}
+
+.hourly-heatmap-scroll {
+  scrollbar-width: thin;
+}
+
+.hourly-heatmap-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.hourly-heatmap-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+}
+
+@media (min-width: 800px) and (max-width: 1100px) and (max-height: 820px) {
+  .dashboard-ipad-lg-compact .hourly-heatmap-card {
+    --hourly-line-col-w: 92px;
+    --hourly-hour-col-w: 58px;
+    --hourly-summary-col-w: 68px;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-scroll {
+    overflow: auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-table {
+    width: max-content !important;
+    min-width: 100% !important;
+    table-layout: fixed !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-table th:first-child,
+  .dashboard-ipad-lg-compact .hourly-heatmap-table td:first-child {
+    width: var(--hourly-line-col-w) !important;
+    min-width: var(--hourly-line-col-w) !important;
+    max-width: var(--hourly-line-col-w) !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-heatmap-table th:not(:first-child),
+  .dashboard-ipad-lg-compact .hourly-heatmap-table td:not(:first-child) {
+    width: var(--hourly-hour-col-w) !important;
+    min-width: var(--hourly-hour-col-w) !important;
+    max-width: var(--hourly-hour-col-w) !important;
+  }
+
+  .dashboard-ipad-lg-compact .hourly-th,
+  .dashboard-ipad-lg-compact .hourly-td {
+    padding: 2px 3px !important;
+    font-size: 8px !important;
+    line-height: 1.05 !important;
+  }
+}
+
+.defect-analysis-table {
+  border-collapse: collapse;
+}
+
+.defect-analysis-table th,
+.defect-analysis-table td {
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  vertical-align: top;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal !important;
+}
+
+.defect-analysis-table th {
+  line-height: 1.15;
+}
+
+.defect-analysis-table td {
+  line-height: 1.2;
+}
+
+.defect-analysis-table tbody tr:hover td {
+  background-color: #13325c;
+}
+
+.defect-analysis-table tbody tr:hover td.sticky {
+  background-color: #13325c;
+}
+
+.dashboard-ipad-lg-compact .defect-th,
+.dashboard-ipad-lg-compact .defect-td {
+  padding: 2px 3px !important;
+  font-size: 8px !important;
+  line-height: 1.15 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}

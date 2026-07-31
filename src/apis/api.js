@@ -31,11 +31,13 @@ const apiGet = async (endpoint, params = {}, retries = 2, skipAuth = false, opti
   const url = `${API_BASE_URL}${endpoint}${buildQueryParams(params, options.arrayFormat)}`;
   const headers = { 'accept': '*/*' };
   if (!skipAuth) Object.assign(headers, getAuthHeaders());
+  if (options.signal?.aborted) return null;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const response = await fetch(url, {
         method: 'GET',
-        headers
+        headers,
+        signal: options.signal
       });
       if (!response.ok) {
         if (response.status === 401) {
@@ -47,6 +49,7 @@ const apiGet = async (endpoint, params = {}, retries = 2, skipAuth = false, opti
       }
       return await response.json();
     } catch (error) {
+      if (error.name === 'AbortError') return null;
       if (attempt < retries) {
         await sleep(1000 * (attempt + 1));
         continue;
@@ -95,15 +98,15 @@ export const getLineUnitPlant = () => apiGet('/User/get-line-unit-plant', {}, 2,
 
 const dashboardArrayOptions = { arrayFormat: 'repeat' };
 
-export const getLineWiseDetails = (params) => apiGet('/api/dashboard/line-wise-details', params, 2, false, dashboardArrayOptions);
+export const getLineWiseDetails = (params, opts = {}) => apiGet('/api/dashboard/line-wise-details', params, 2, false, { ...dashboardArrayOptions, ...opts });
 
-export const getCumulative = (params) => apiGet('/api/dashboard/cumulative', params, 2, false, dashboardArrayOptions);
+export const getCumulative = (params, opts = {}) => apiGet('/api/dashboard/cumulative', params, 2, false, { ...dashboardArrayOptions, ...opts });
 
-export const getPoDetails = (params) => apiGet('/api/dashboard/po-details', params, 2, false, dashboardArrayOptions);
+export const getPoDetails = (params, opts = {}) => apiGet('/api/dashboard/po-details', params, 2, false, { ...dashboardArrayOptions, ...opts });
 
-export const getIssueDetails = (params) => apiGet('/api/dashboard/issue-details', params, 2, false, dashboardArrayOptions);
+export const getIssueDetails = (params, opts = {}) => apiGet('/api/dashboard/issue-details', params, 2, false, { ...dashboardArrayOptions, ...opts });
 
-export const getHourlyLineDetails = (params) => apiGet('/api/dashboard/get-hourly-Line-details', params, 2, false, dashboardArrayOptions);
+export const getHourlyLineDetails = (params, opts = {}) => apiGet('/api/dashboard/get-hourly-Line-details', params, 2, false, { ...dashboardArrayOptions, ...opts });
 
 export const login = (body) => apiRequest('/User/Login', 'POST', body);
 

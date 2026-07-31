@@ -18,7 +18,8 @@ export const FilterProvider = ({ children }) => {
     dateTo: today,
     plant: [],
     unit: [],
-    sewingLine: []
+    sewingLine: [],
+    search: ''
   });
 
   const [filterOptions, setFilterOptions] = useState({
@@ -39,7 +40,7 @@ export const FilterProvider = ({ children }) => {
   const [fetchTrigger, setFetchTrigger] = useState(0);
   const filtersRef = useRef(filters);
   filtersRef.current = filters;
-  const requestIdRef = useRef(0);
+  const abortControllerRef = useRef(null);
   const initialLoadRef = useRef(false);
 
   useEffect(() => {
@@ -75,7 +76,8 @@ export const FilterProvider = ({ children }) => {
           dateTo: today,
           plant: uniquePlants.map(p => String(p.id)),
           unit: uniqueUnits.map(u => String(u.id)),
-          sewingLine: uniqueLines.map(l => String(l.id))
+          sewingLine: uniqueLines.map(l => String(l.id)),
+          search: ''
         });
       } catch (error) {
         console.error('Error loading filter options:', error);
@@ -89,8 +91,14 @@ export const FilterProvider = ({ children }) => {
 
   const fetchDashboardData = useCallback(async (silent = false) => {
     const current = filtersRef.current;
-    const reqId = ++requestIdRef.current;
     if (!silent) setDataLoading(true);
+
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+    const { signal } = controller;
 
     try {
       const baseParams = {
@@ -102,13 +110,13 @@ export const FilterProvider = ({ children }) => {
       if (current.sewingLine.length > 0) baseParams.SewingLineIds = current.sewingLine.map(Number);
 
       const [cumulativeRes, lineWiseRes, issueRes, hourlyRes] = await Promise.allSettled([
-        getCumulative(baseParams),
-        getLineWiseDetails(baseParams),
-        getIssueDetails(baseParams),
-        getHourlyLineDetails(baseParams)
+        getCumulative(baseParams, { signal }),
+        getLineWiseDetails(baseParams, { signal }),
+        getIssueDetails(baseParams, { signal }),
+        getHourlyLineDetails(baseParams, { signal })
       ]);
 
-      if (requestIdRef.current !== reqId) return;
+      if (signal.aborted) return;
 
       setDashboardData({
         cumulative: cumulativeRes.status === 'fulfilled' ? cumulativeRes.value : null,
@@ -117,9 +125,10 @@ export const FilterProvider = ({ children }) => {
         hourlyLineDetails: hourlyRes.status === 'fulfilled' ? (hourlyRes.value || []) : []
       });
     } catch (error) {
+      if (error.name === 'AbortError') return;
       console.error('Error loading dashboard data:', error);
     } finally {
-      if (requestIdRef.current === reqId && !silent) {
+      if (!signal.aborted && !silent) {
         setDataLoading(false);
       }
     }
