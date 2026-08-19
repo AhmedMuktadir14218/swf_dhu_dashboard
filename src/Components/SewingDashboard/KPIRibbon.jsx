@@ -78,8 +78,15 @@ export default function KPIRibbon() {
 
   const kpis = [
     {
-      title: 'TARGET QTY',
+      title: 'Day TGT QTY',
       value: c ? formatNum(c.targetQty) : '—',
+      color: 'text-green-400',
+      Icon: Target,
+      ring: 'from-green-500 to-green-700'
+    },
+    {
+      title: 'TARGET QTY',
+      value: c ? formatNum(c.ieTargetQty) : '—',
       color: 'text-red-400',
       Icon: Target,
       ring: 'from-red-500 to-red-700'
@@ -132,7 +139,7 @@ export default function KPIRibbon() {
   ];
 
   return (
-    <div className="kpi-ribbon grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2 lg:gap-3 h-full min-h-0">
+    <div className="kpi-ribbon grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-2 lg:gap-3 h-full min-h-0">
       {kpis.map((kpi, idx) => {
         const Icon = kpi.Icon;
 

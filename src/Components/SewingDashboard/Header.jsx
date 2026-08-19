@@ -24,7 +24,7 @@ export default function Header({ children, isCompact = false }) {
         isCompact ? 'gap-2 max-[799px]:gap-2' : 'gap-4 max-[799px]:gap-2'
       }`}
     >
-      <div className="flex items-center gap-2 shrink-0 max-[799px]:justify-between">
+      {/* <div className="flex items-center gap-2 shrink-0 max-[799px]:justify-between">
         <div className={`flex items-center min-w-0 ${isCompact ? 'gap-1.5' : 'gap-2'}`}>
           <div
             className={`flex items-center justify-center shrink-0 ${
@@ -66,13 +66,13 @@ export default function Header({ children, isCompact = false }) {
             className={`w-4 h-4 text-sky-400 ${dataLoading ? 'animate-spin' : ''}`}
           />
         </button>
-      </div>
+      </div> */}
 
       <div className="flex-1 flex justify-center items-center overflow-x-auto min-w-0 max-[799px]:justify-start max-[799px]:w-full max-[799px]:pb-1">
         {children}
       </div>
 
-      <div className="flex items-center gap-2 shrink-0 max-[799px]:hidden">
+      {/* <div className="flex items-center gap-2 shrink-0 max-[799px]:hidden">
         <button
           onClick={fetchDashboardData}
           disabled={dataLoading}
@@ -92,7 +92,7 @@ export default function Header({ children, isCompact = false }) {
           </div>
           <div className="text-[10px] text-white/80">{lastRefresh}</div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

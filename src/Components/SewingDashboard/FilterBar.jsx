@@ -266,7 +266,7 @@ export default function FilterBar({ isMediumView, showSearch = false }) {
 return (
   <div
     className={`flex flex-nowrap items-end justify-center w-full ${
-      isMediumView ? 'gap-1.5' : 'gap-3'
+      isMediumView ? 'gap-6' : 'gap-8'
     }`}
   >
     <DateInput

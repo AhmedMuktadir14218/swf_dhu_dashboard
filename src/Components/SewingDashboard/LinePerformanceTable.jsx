@@ -56,6 +56,7 @@ export default function LinePerformanceTable() {
       r.dayTarget,
       r.ieTargetQty,
       r.pass,
+      r.afterWashQty,
       r.defectQty,
       r.rejectQty,
       r.targetEff.toFixed(2),
@@ -109,7 +110,7 @@ export default function LinePerformanceTable() {
         <table className="w-full text-xs min-w-[950px] text-white">
           <thead className="bg-[#11458b] sticky top-0 z-10">
             <tr>
-              {["Sewing Line", "Day Target", "IE Target",  "Output", "A.W. Qty", "Defect", "Reject", "Target Eff", "Actual Eff", "DHU %", "Man Power","Working Hours", "Status"].map((head) => (
+              {["Factory","Sewing Line", "Day Target", "IE Target",  "Output", "A.W. Qty", "Defect", "Reject", "Target Eff", "Actual Eff", "DHU %", "Man Power","Working Hours", "Status"].map((head) => (
                 <th key={head} className="px-2 py-1.5 border border-white/10 text-left whitespace-nowrap">{head}</th>
               ))}
             </tr>
@@ -124,6 +125,7 @@ export default function LinePerformanceTable() {
                 const totalOutput = r.pass + r.defectQty + r.rejectQty;
                 return (
                   <tr key={i} className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c] transition-colors">
+                    <td className="px-2 py-1 border border-white/10 font-bold">{r.factoryName}</td>
                     <td className="px-2 py-1 border border-white/10 font-bold">{r.sewingLineName}</td>
                     <td className="px-2 py-1 border border-white/10 text-center">{formatNum(r.dayTarget)}</td>
                     <td className="px-2 py-1 border border-white/10 text-center">{formatNum(r.ieTargetQty)}</td>
