@@ -1,4 +1,4 @@
-import Sidebar from '../../Components/FinishingDashboard/Sidebar';
+
 import Header from '../../Components/FinishingDashboard/Header';
 import FilterBar from '../../Components/FinishingDashboard/FilterBar';
 import KPIRibbon from '../../Components/FinishingDashboard/KPIRibbon';
@@ -13,9 +13,9 @@ import AlertsAndActions from '../../Components/FinishingDashboard/AlertsAndActio
 const FinishingDashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#020b14] to-[#061b2d] font-inter">
-      <Sidebar />
       
-      <div className="ml-14">
+      
+      <div>
         <Header />
         {/* <FilterBar /> */}
         <KPIRibbon />

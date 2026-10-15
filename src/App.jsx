@@ -27,7 +27,6 @@ function AppRoutes() {
         <Route path="admin/users" element={<ProtectedRoute adminOnly><UserManagement /></ProtectedRoute>} />
         <Route path="/po-details" element={<PoDetailsSewing />} />
         <Route path="/finishing" element={<FinishingDashboard />} />
-
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

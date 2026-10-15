@@ -7,12 +7,14 @@ import {
   ChevronLeft,
   ChevronRight,
   LogOut,
-  Factory
+  Factory,
+  PackageCheck
 } from 'lucide-react';
 
 const navItems = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },  
+  { to: '/', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },
   { to: '/po-details', label: 'PO Details', icon: Factory, adminOnly: false },
+  { to: '/finishing', label: 'Finishing Dashboard', icon: PackageCheck, adminOnly: false },
   { to: '/admin/users', label: 'User Management', icon: Users, adminOnly: true },
 
 ];
@@ -32,9 +34,14 @@ export default function DashboardLayout() {
   return (
     <div className="flex h-screen bg-[#071a33] text-white overflow-hidden">
       <aside className={`${collapsed ? 'w-16' : 'w-56'} bg-[#0a1f3d] border-r border-white/10 flex flex-col transition-all duration-300 shrink-0`}>
-        <div className="flex items-center justify-between px-3 py-3 border-b border-white/10">
-          {!collapsed && <span className="text-xs font-bold uppercase text-white/80 truncate">SWF DHU</span>}
-          <button onClick={() => setCollapsed(!collapsed)} className="text-white/50 hover:text-white p-1 rounded transition-colors">
+        <div className={`flex ${collapsed ? 'flex-col items-center gap-2' : 'items-center gap-2'} px-3 py-3 border-b border-white/10`}>
+          <img
+            src="/sewignLogo.png"
+            alt="SWF DHU logo"
+            className="w-9 h-9 rounded-lg bg-black object-contain shrink-0 ring-1 ring-white/10"
+          />
+          {!collapsed && <span className="flex-1 text-xs font-bold uppercase text-white/80 truncate">SWF DHU</span>}
+          <button onClick={() => setCollapsed(!collapsed)} className="text-white/50 hover:text-white p-1 rounded transition-colors shrink-0">
             {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
           </button>
         </div>
