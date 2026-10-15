@@ -398,7 +398,7 @@ const HourlyFinishingTable = () => {
                       ? 'bg-status-green/20 text-status-green'
                       : row.status === 'break'
                       ? 'bg-status-amber/20 text-status-amber'
-                      : 'bg-purple-500/20 text-purple-400'
+                      : 'bg-[var(--accent-soft)] text-purple-400'
                   }`}>
                     {row.status}
                   </span>

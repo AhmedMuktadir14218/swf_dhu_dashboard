@@ -91,9 +91,9 @@ export default function LinePerformanceTable() {
   }, [filters, filterOptions, rows]);
 
   return (
-    <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden flex flex-col h-full">
-      <div className="flex items-center justify-between px-3 py-1.5 border-b border-white/10">
-      <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white">
+    <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden flex flex-col h-full">
+      <div className="flex items-center justify-between px-3 py-1.5 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)]">
+      <div className="text-sm font-extrabold uppercase text-white">
         Line Performance Matrix
       </div>
       <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ export default function LinePerformanceTable() {
      </div>
       <div className="overflow-auto flex-1">
         <table className="w-full text-xs min-w-[950px] text-white">
-          <thead className="bg-[#11458b] sticky top-0 z-10">
+          <thead className="bg-[var(--thead)] sticky top-0 z-10">
             <tr>
               {["Factory","Sewing Line", "Day Target", "IE Target",  "Output", "A.W. Qty", "Defect", "Reject", "Target Eff", "Actual Eff", "DHU %", "Man Power","Working Hours", "Status"].map((head) => (
                 <th key={head} className="px-2 py-1.5 border border-white/10 text-left whitespace-nowrap">{head}</th>
@@ -124,7 +124,7 @@ export default function LinePerformanceTable() {
               rows.map((r, i) => {
                 const totalOutput = r.pass + r.defectQty + r.rejectQty;
                 return (
-                  <tr key={i} className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c] transition-colors">
+                  <tr key={i} className="odd:bg-[var(--row-odd)] even:bg-[var(--row-even)] hover:bg-[var(--row-hover)] transition-colors">
                     <td className="px-2 py-1 border border-white/10 font-bold">{r.factoryName}</td>
                     <td className="px-2 py-1 border border-white/10 font-bold">{r.sewingLineName}</td>
                     <td className="px-2 py-1 border border-white/10 text-center">{formatNum(r.dayTarget)}</td>

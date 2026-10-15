@@ -133,17 +133,17 @@ export default function KPIRibbon() {
       title: 'REMAINING',
       value: formatNum(remaining),
       subtitle: 'To Target',
-      color: 'text-blue-400',
+      color: 'text-[color:var(--accent)]',
       Icon: Crosshair,
-      ring: 'from-blue-500 to-sky-600'
+      ring: 'from-[var(--kpi-rem-from)] to-[var(--kpi-rem-to)]'
     },
     {
       title: 'MANPOWER',
       value: formatNum(shouldAverage ? Math.round(totalManPower / dayCount) : totalManPower),
       subtitle: lines.length > 0 ? `${lines.length} Line${lines.length > 1 ? 's' : ''}${shouldAverage ? ` (${dayCount} days)` : ''}` : '—',
-      color: 'text-purple-400',
+      color: 'text-[color:var(--stat-2)]',
       Icon: Users,
-      ring: 'from-purple-500 to-indigo-600'
+      ring: 'from-[var(--kpi-mp-from)] to-[var(--kpi-mp-to)]'
     }
   ];
 
@@ -155,12 +155,12 @@ export default function KPIRibbon() {
         return (
           <div
             key={idx}
-            className="kpi-card rounded-lg border border-white/15 bg-[#0b2344] p-2 shadow-md flex items-center gap-2 lg:gap-3 min-h-[78px] h-full min-w-0"
+            className="kpi-card rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-kpi)] p-2 shadow-md flex items-center gap-2 lg:gap-3 min-h-[78px] h-full min-w-0"
           >
             <div
               className={`kpi-icon-ring w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-gradient-to-br ${kpi.ring} p-[2px] shrink-0`}
             >
-              <div className="kpi-icon-inner w-full h-full rounded-full bg-[#0b2344] flex items-center justify-center text-white">
+              <div className="kpi-icon-inner w-full h-full rounded-full bg-[var(--bg-inset)] flex items-center justify-center text-white">
                 <Icon className="kpi-icon w-4 h-4 lg:w-5 lg:h-5" />
               </div>
             </div>

@@ -68,7 +68,7 @@ const useIsIpadLgCompact = () => {
 const Spinner = () => (
   <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/20 pointer-events-none">
     <div className="flex flex-col items-center gap-3">
-      <div className="w-10 h-10 border-[3px] border-white/20 border-t-sky-400 rounded-full animate-spin" />
+      <div className="w-10 h-10 border-[3px] border-white/20 border-t-[color:var(--accent)] rounded-full animate-spin" />
       <span className="text-white/80 text-sm font-semibold tracking-wide">Loading...</span>
     </div>
   </div>
@@ -78,7 +78,7 @@ const HeaderShell = ({ isTabletView, isIpadLgCompact }) => (
   <div
     className={
       isTabletView
-        ? 'sticky top-0 z-30 max-w-[800px] mx-auto w-full px-2 pt-2 mb-2 bg-[#071a33]/95 backdrop-blur'
+        ? 'sticky top-0 z-30 max-w-[800px] mx-auto w-full px-2 pt-2 mb-2 bg-[var(--bg-page)]/95 backdrop-blur'
         : `shrink-0 mx-auto w-full ${
             isIpadLgCompact
               ? 'max-w-[1100px] px-[2px] pt-[2px] mb-[2px]'
@@ -89,8 +89,8 @@ const HeaderShell = ({ isTabletView, isIpadLgCompact }) => (
     <div
       className={
         isTabletView
-          ? 'rounded-xl border border-white/15 bg-[#0a1f3d] px-3 py-2 shadow-lg overflow-hidden'
-          : `border border-white/15 bg-[#0a1f3d] shadow-md overflow-hidden ${
+          ? 'rounded-xl border border-[color:var(--border-soft)] bg-[var(--bg-card)] px-3 py-2 shadow-lg overflow-hidden'
+          : `border border-[color:var(--border-soft)] bg-[var(--bg-card)] shadow-md overflow-hidden ${
               isIpadLgCompact
                 ? 'rounded-md px-2 py-0.5'
                 : 'rounded-lg px-3 py-1'
@@ -237,7 +237,7 @@ const DashboardContent = () => {
         isTabletView
           ? 'min-h-screen overflow-y-auto overflow-x-hidden'
           : 'h-screen overflow-hidden flex flex-col'
-      } bg-[#071a33] text-white font-sans relative ${
+      } bg-[var(--bg-page)] text-white font-sans relative ${
         isIpadLgCompact ? 'dashboard-ipad-lg-compact' : ''
       }`}
     >

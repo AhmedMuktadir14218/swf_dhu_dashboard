@@ -694,11 +694,11 @@
 }
 
 .defect-analysis-table tbody tr:hover td {
-  background-color: #13325c;
+  background-color: var(--row-hover);
 }
 
 .defect-analysis-table tbody tr:hover td.sticky {
-  background-color: #13325c;
+  background-color: var(--row-hover);
 }
 
 .dashboard-ipad-lg-compact .defect-th,

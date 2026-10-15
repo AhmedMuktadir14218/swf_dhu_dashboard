@@ -213,8 +213,8 @@ export default function AlertFeed() {
   }
 
   return (
-    <div className="alert-feed-card rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden flex flex-col h-full min-h-0">
-      <div className="alert-feed-header px-3 py-1 border-b border-white/10 flex justify-between items-center bg-[#0a1f3d] shrink-0">
+    <div className="alert-feed-card rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden flex flex-col h-full min-h-0">
+      <div className="alert-feed-header px-3 py-1 border-b border-[color:var(--border-strong)] flex justify-between items-center bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)] shrink-0">
         <div className="alert-feed-title text-xs font-extrabold uppercase text-white truncate">
           Alerts & Actions
         </div>
@@ -224,7 +224,7 @@ export default function AlertFeed() {
         </div>
       </div>
 
-      <div className="alert-feed-list p-1 space-y-1 overflow-y-auto flex-1 min-h-0 bg-[#0c2340]">
+      <div className="alert-feed-list p-1 space-y-1 overflow-y-auto flex-1 min-h-0 bg-[var(--bg-inset)]">
         {dataLoading && alerts.length === 0 ? (
           <div className="alert-feed-empty px-4 py-6 text-center text-white/50 text-[11px]">
             Loading alerts...
@@ -236,7 +236,7 @@ export default function AlertFeed() {
             return (
               <div
                 key={i}
-                className="alert-feed-item rounded border border-white/10 bg-[#0b2344] px-2 py-1.5 flex items-center justify-between gap-2 hover:border-white/20 transition-colors min-w-0"
+                className="alert-feed-item rounded border border-[color:var(--border-soft)] bg-[var(--bg-kpi)] px-2 py-1.5 flex items-center justify-between gap-2 hover:border-[color:var(--accent-border)] transition-colors min-w-0"
               >
                 <div className="flex items-start gap-2 min-w-0 flex-1">
   <Icon

@@ -39,8 +39,8 @@ export default function PoDetailsModal({ filters, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={onClose}>
-      <div className="bg-[#0a1f3d] border border-white/15 rounded-lg w-[95vw] max-w-[1700px] max-h-[85vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-[#071A33]">
+      <div className="bg-[var(--bg-card)] border border-[color:var(--border-soft)] rounded-lg w-[95vw] max-w-[1700px] max-h-[85vh] flex flex-col shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-4 py-2 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)]">
           <h2 className="text-sm font-bold uppercase text-white">PO Details</h2>
           <button onClick={onClose} className="text-white/70 hover:text-white text-lg leading-none">&times;</button>
         </div>
@@ -52,7 +52,7 @@ export default function PoDetailsModal({ filters, onClose }) {
             <div className="flex items-center justify-center py-10 text-white/50">No data found</div>
           ) : (
             <table className="w-full text-xs text-white min-w-[1000px]">
-              <thead className="bg-[#11458b] sticky top-0 z-10">
+              <thead className="bg-[var(--thead)] sticky top-0 z-10">
                 <tr>
                   {[
                     'Buyer', 'Style', 'PO', 'Line In Qty',
@@ -65,7 +65,7 @@ export default function PoDetailsModal({ filters, onClose }) {
               </thead>
               <tbody>
                 {data.map((row, i) => (
-                  <tr key={i} className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c] transition-colors">
+                  <tr key={i} className="odd:bg-[var(--row-odd)] even:bg-[var(--row-even)] hover:bg-[var(--row-hover)] transition-colors">
                     <td className="px-2 py-1 border border-white/10">{row.buyerName}</td>
                     <td className="px-2 py-1 border border-white/10">{row.styleName}</td>
                     <td className="px-2 py-1 border border-white/10">{row.poNumber}</td>

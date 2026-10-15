@@ -48,20 +48,20 @@ export default function UserManagement() {
   return (
     <div className="h-full overflow-auto p-4">
       <div className="max-w-[1400px] mx-auto">
-        <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-[#11458b]/50">
+        <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)]">
             <h1 className="text-sm font-bold uppercase text-white">User Management</h1>
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowUserType(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-purple-500 hover:bg-purple-600 text-white text-xs font-medium rounded-md transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--accent-soft)] hover:bg-[var(--accent-strong)]/25 border border-[color:var(--accent-border)] text-[color:var(--accent)] text-xs font-medium rounded-md transition-colors"
               >
                 <Shield className="w-3.5 h-3.5" />
                 User Type
               </button>
               <button
                 onClick={() => setShowCreateUser(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-medium rounded-md transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--accent-strong)] hover:bg-[var(--accent-strong-hover)] text-white text-xs font-medium rounded-md transition-colors"
               >
                 <UserPlus className="w-3.5 h-3.5" />
                 Create User
@@ -76,7 +76,7 @@ export default function UserManagement() {
                 type="text"
                 value={search}
                 onChange={e => { setSearch(e.target.value); setPage(1); }}
-                className="w-full pl-9 pr-3 py-1.5 bg-[#0c2647] border border-white/15 rounded-md text-white text-xs placeholder-white/30 focus:outline-none focus:border-sky-500 transition-colors"
+                className="w-full pl-9 pr-3 py-1.5 bg-[var(--bg-inset)] border border-[color:var(--border-soft)] rounded-md text-white text-xs placeholder-white/30 focus:outline-none focus:border-[color:var(--accent-strong)] transition-colors"
                 placeholder="Search users..."
               />
             </div>
@@ -84,7 +84,7 @@ export default function UserManagement() {
 
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-white">
-              <thead className="bg-[#0c2647]">
+              <thead className="bg-[var(--row-odd)]">
                 <tr>
                   {['ID', 'Name', 'Username', 'Email', 'Mobile', 'Roles', 'Assignments'].map(h => (
                     <th key={h} className="px-3 py-2 border-b border-white/10 text-left text-white/60 font-medium uppercase tracking-wide whitespace-nowrap">{h}</th>
@@ -98,7 +98,7 @@ export default function UserManagement() {
                 ) : users.length === 0 ? (
                   <tr><td colSpan={8} className="px-4 py-8 text-center text-white/40">No users found</td></tr>
                 ) : users.map(u => (
-                  <tr key={u.id} className="border-b border-white/5 hover:bg-[#13325c] transition-colors">
+                  <tr key={u.id} className="border-b border-white/5 hover:bg-[var(--row-hover)] transition-colors">
                     <td className="px-3 py-2 text-white/50">{u.id}</td>
                     <td className="px-3 py-2 font-semibold">{u.fullName}</td>
                     <td className="px-3 py-2">{u.username}</td>
@@ -107,7 +107,7 @@ export default function UserManagement() {
                     <td className="px-3 py-2">
                       <div className="flex gap-1 flex-wrap">
                         {(u.roles || []).map(r => (
-                          <span key={r} className="px-1.5 py-0.5 bg-sky-500/20 text-sky-400 rounded text-[10px] font-medium">{r}</span>
+                          <span key={r} className="px-1.5 py-0.5 bg-[var(--accent-soft)] text-[color:var(--accent)] rounded text-[10px] font-medium">{r}</span>
                         ))}
                       </div>
                     </td>
@@ -127,7 +127,7 @@ export default function UserManagement() {
                       <div className="flex items-center justify-end gap-1">
                         <button
                           onClick={() => setShowAssign(u)}
-                          className="p-1.5 text-sky-400 hover:bg-sky-500/10 rounded transition-colors"
+                          className="p-1.5 text-[color:var(--accent)] hover:bg-[var(--accent-soft2)] rounded transition-colors"
                           title="Manage Assignments"
                         >
                           <Shield className="w-3.5 h-3.5" />
@@ -170,7 +170,7 @@ export default function UserManagement() {
                     key={p}
                     onClick={() => setPage(p)}
                     className={`w-7 h-7 rounded text-xs font-medium transition-colors ${
-                      p === page ? 'bg-sky-500 text-white' : 'text-white/50 hover:bg-white/5'
+                      p === page ? 'bg-[var(--accent-strong)] text-white' : 'text-white/50 hover:bg-white/5'
                     }`}
                   >
                     {p}
@@ -195,7 +195,7 @@ export default function UserManagement() {
       {showUserType && <UserTypeFormModal onClose={() => setShowUserType(false)} />}
       {deleteConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={() => setDeleteConfirm(null)}>
-          <div className="bg-[#0a1f3d] border border-white/15 rounded-lg p-6 w-80 shadow-2xl" onClick={e => e.stopPropagation()}>
+          <div className="bg-[var(--bg-card)] border border-[color:var(--border-soft)] rounded-lg p-6 w-80 shadow-2xl" onClick={e => e.stopPropagation()}>
             <h3 className="text-sm font-bold text-white mb-2">Delete User</h3>
             <p className="text-xs text-white/50 mb-4">Are you sure you want to delete this user? This action cannot be undone.</p>
             <div className="flex justify-end gap-2">

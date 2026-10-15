@@ -191,14 +191,14 @@ export default function DefectAnalysisTable() {
   const spans = buildRowSpans(rows);
 
   return (
-    <div className="defect-analysis-card rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden flex flex-col h-full min-h-0">
-      <div className="defect-analysis-title px-3 py-1 border-b border-white/10 text-xs font-extrabold uppercase text-white shrink-0">
+    <div className="defect-analysis-card rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden flex flex-col h-full min-h-0">
+      <div className="defect-analysis-title px-3 py-1 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)] text-xs font-extrabold uppercase text-white shrink-0">
         Defect Analysis Details
       </div>
 
       <div className="defect-analysis-scroll overflow-auto flex-1 min-h-0 scroll-smooth snap-y snap-mandatory">
         <table className="defect-analysis-table w-full table-fixed text-[11px] min-w-[600px] text-white border-collapse">
-          <thead className="bg-[#11458b] sticky top-0 z-30">
+          <thead className="bg-[var(--thead)] sticky top-0 z-30">
             <tr>
               {[
                 'Sewing Line',
@@ -210,7 +210,7 @@ export default function DefectAnalysisTable() {
               ].map((h, idx) => (
                 <th
                   key={h}
-                  className={`defect-th px-2 py-1 border border-white/20 text-left whitespace-normal break-words bg-[#11458b] ${
+                  className={`defect-th px-2 py-1 border border-white/20 text-left whitespace-normal break-words bg-[var(--thead)] ${
   idx < 4 ? 'sticky z-30' : ''
 }`}
                   style={idx < 4 ? stickyHeaderStyle(idx) : metricCellStyle(idx)}
@@ -258,8 +258,8 @@ export default function DefectAnalysisTable() {
                         rowSpan={idx < 4 ? span : undefined}
                         className={`defect-td px-2 py-1 border border-white/20 align-top whitespace-normal break-words leading-tight ${
   isLeftSticky
-    ? 'sticky z-10 bg-[#0a1f3d]'
-    : 'hover:bg-[#13325c]'
+    ? 'sticky z-10 bg-[var(--bg-card)]'
+    : 'hover:bg-[var(--row-hover)]'
 }`}
                         style={
                           isLeftSticky

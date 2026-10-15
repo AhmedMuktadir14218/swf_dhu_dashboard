@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './theme/ThemeContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import DashboardLayout from './layouts/DashboardLayout';
 import LoginPage from './Pages/Auth/LoginPage';
@@ -13,8 +14,8 @@ function AppRoutes() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#071a33]">
-        <div className="w-8 h-8 border-[3px] border-white/20 border-t-sky-400 rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-page)]">
+        <div className="w-8 h-8 border-[3px] border-white/20 border-t-[color:var(--accent)] rounded-full animate-spin" />
       </div>
     );
   }
@@ -35,10 +36,12 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }

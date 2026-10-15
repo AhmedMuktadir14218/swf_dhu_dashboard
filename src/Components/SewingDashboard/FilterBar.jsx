@@ -24,20 +24,20 @@ const CheckboxDropdownMenu = ({ anchorRect, options, selected, onToggle, onSelec
         minWidth: Math.max(anchorRect.width, 160),
         zIndex: 99999
       }}
-      className="rounded-md border border-white/10 bg-[#0f1d36] shadow-2xl shadow-black/50 py-1"
+      className="rounded-md border border-[color:var(--border-soft)] bg-[var(--bg-menu)] shadow-2xl shadow-black/50 py-1"
     >
-      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-white/10">
+      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-[color:var(--border-soft)]">
         <button
           type="button"
           onClick={() => { onSelectAll(); onClose(); }}
-          className={`flex-1 text-center text-[11px] px-2 py-1 rounded transition-colors ${allSelected ? 'text-sky-400 bg-sky-500/10' : 'text-white/70 hover:bg-white/10'}`}
+          className={`flex-1 text-center text-[11px] px-2 py-1 rounded transition-colors ${allSelected ? 'text-[color:var(--accent)] bg-[var(--accent-soft)]' : 'text-white/70 hover:bg-white/10'}`}
         >
           Select All
         </button>
         <button
           type="button"
           onClick={() => { onClear(); onClose(); }}
-          className={`flex-1 text-center text-[11px] px-2 py-1 rounded transition-colors ${selected.length === 0 ? 'text-sky-400 bg-sky-500/10' : 'text-white/70 hover:bg-white/10'}`}
+          className={`flex-1 text-center text-[11px] px-2 py-1 rounded transition-colors ${selected.length === 0 ? 'text-[color:var(--accent)] bg-[var(--accent-soft)]' : 'text-white/70 hover:bg-white/10'}`}
         >
           Clear
         </button>
@@ -50,7 +50,7 @@ const CheckboxDropdownMenu = ({ anchorRect, options, selected, onToggle, onSelec
               key={option.id}
               className="flex items-center gap-2 px-3 py-1.5 text-[12px] cursor-pointer hover:bg-white/10 transition-colors"
             >
-              <span className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 transition-colors ${isChecked ? 'bg-sky-500 border-sky-500' : 'border-white/30 bg-transparent'}`}>
+              <span className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 transition-colors ${isChecked ? 'bg-[var(--accent-strong)] border-[color:var(--accent-strong)]' : 'border-white/30 bg-transparent'}`}>
                 {isChecked && <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />}
               </span>
               <input
@@ -133,7 +133,7 @@ const MultiSelectDropdown = ({
         onClick={toggle}
         className={`${
           isMediumView ? 'h-6 px-1.5 text-[10px]' : 'h-7 px-2.5 text-[12px]'
-        } rounded-md border border-white/15 bg-[#0f1d36] flex items-center justify-between text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 disabled:opacity-50`}
+        } rounded-md border border-[color:var(--border-soft)] bg-[var(--bg-inset)] flex items-center justify-between text-white/90 cursor-pointer hover:bg-[#1e0f3a] hover:border-[color:var(--accent-border)] transition-all duration-150 disabled:opacity-50`}
       >
         <span className="truncate">{displayText}</span>
         <ChevronDown
@@ -176,7 +176,7 @@ const DateInput = ({ label, value, onChange, isMediumView = false }) => (
         onChange={e => onChange(e.target.value)}
         className={`${
           isMediumView ? 'h-6 px-1.5 text-[10px]' : 'h-7 px-2.5 text-[12px]'
-        } w-full rounded-md border border-white/15 bg-[#0f1d36] pr-1 text-white/90 cursor-pointer hover:bg-[#142244] hover:border-white/25 transition-all duration-150 outline-none focus:border-sky-500/50 [color-scheme:dark]`}
+        } w-full rounded-md border border-[color:var(--border-soft)] bg-[var(--bg-inset)] pr-1 text-white/90 cursor-pointer hover:bg-[#1e0f3a] hover:border-[color:var(--accent-border)] transition-all duration-150 outline-none focus:border-[color:var(--accent-strong)] [color-scheme:dark]`}
       />
     </div>
   </div>
@@ -342,7 +342,7 @@ return (
         placeholder="PO / Style..."
         className={`${
           isMediumView ? 'h-6 px-1.5 text-[10px]' : 'h-7 px-2.5 text-[12px]'
-        } w-full rounded-md border border-white/15 bg-[#0f1d36] text-white/90 placeholder:text-white/30 cursor-text hover:bg-[#142244] hover:border-white/25 transition-all duration-150 outline-none focus:border-sky-500/50`}
+        } w-full rounded-md border border-[color:var(--border-soft)] bg-[var(--bg-inset)] text-white/90 placeholder:text-white/30 cursor-text hover:bg-[#1e0f3a] hover:border-[color:var(--accent-border)] transition-all duration-150 outline-none focus:border-[color:var(--accent-strong)]`}
       />
     </div>
     )}
@@ -352,11 +352,11 @@ return (
         onClick={handleSearch}
         className={`${
           isMediumView ? 'h-6 px-2' : 'h-7 px-3'
-        } rounded-md border border-white/15 bg-[#0f1d36] text-white/90 hover:bg-[#142244] hover:border-white/25 transition-all duration-150 cursor-pointer flex items-center gap-1`}
+        } rounded-md border border-[color:var(--border-soft)] bg-[var(--bg-inset)] text-white/90 hover:bg-[#1e0f3a] hover:border-[color:var(--accent-border)] transition-all duration-150 cursor-pointer flex items-center gap-1`}
         title="Apply filter"
       >
         <Search
-          className={`text-sky-400 ${
+          className={`text-[color:var(--accent)] ${
             isMediumView ? 'w-3 h-3' : 'w-3.5 h-3.5'
           }`}
         />

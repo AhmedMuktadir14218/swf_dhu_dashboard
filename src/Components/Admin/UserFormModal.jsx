@@ -61,8 +61,8 @@ export default function UserFormModal({ user, onClose, onSaved }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={onClose}>
-      <div className="bg-[#0a1f3d] border border-white/15 rounded-lg w-[420px] max-h-[90vh] overflow-auto shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-[#11458b]">
+      <div className="bg-[var(--bg-card)] border border-[color:var(--border-soft)] rounded-lg w-[420px] max-h-[90vh] overflow-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-4 py-2 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)]">
           <h2 className="text-sm font-bold uppercase text-white">{isEdit ? 'Edit User' : 'Create User'}</h2>
           <button onClick={onClose} className="text-white/70 hover:text-white text-lg leading-none">&times;</button>
         </div>
@@ -85,7 +85,7 @@ export default function UserFormModal({ user, onClose, onSaved }) {
                 type={item.type}
                 value={form[item.field]}
                 onChange={e => update(item.field, e.target.value)}
-                className="w-full px-3 py-2 bg-[#0c2647] border border-white/15 rounded-md text-white text-xs placeholder-white/30 focus:outline-none focus:border-sky-500 transition-colors"
+                className="w-full px-3 py-2 bg-[var(--bg-inset)] border border-[color:var(--border-soft)] rounded-md text-white text-xs placeholder-white/30 focus:outline-none focus:border-[color:var(--accent-strong)] transition-colors"
                 placeholder={item.label}
                 required={item.required}
               />
@@ -97,7 +97,7 @@ export default function UserFormModal({ user, onClose, onSaved }) {
             <select
               value={form.userTypeId}
               onChange={e => update('userTypeId', Number(e.target.value))}
-              className="w-full px-3 py-2 bg-[#0c2647] border border-white/15 rounded-md text-white text-xs focus:outline-none focus:border-sky-500 transition-colors"
+              className="w-full px-3 py-2 bg-[var(--bg-inset)] border border-[color:var(--border-soft)] rounded-md text-white text-xs focus:outline-none focus:border-[color:var(--accent-strong)] transition-colors"
             >
               <option value={0}>Select User Type</option>
               <option value={1}>Admin</option>
@@ -107,7 +107,7 @@ export default function UserFormModal({ user, onClose, onSaved }) {
 
           <div className="flex justify-end gap-2 pt-2">
             <button type="button" onClick={onClose} className="px-4 py-2 text-xs text-white/60 hover:text-white bg-white/5 hover:bg-white/10 rounded-md transition-colors">Cancel</button>
-            <button type="submit" disabled={loading} className="px-4 py-2 text-xs text-white bg-sky-500 hover:bg-sky-600 disabled:bg-sky-500/50 disabled:cursor-not-allowed rounded-md transition-colors flex items-center gap-1.5">
+            <button type="submit" disabled={loading} className="px-4 py-2 text-xs text-white bg-[var(--accent-strong)] hover:bg-[var(--accent-strong-hover)] disabled:bg-[var(--accent-strong-disabled)] disabled:cursor-not-allowed rounded-md transition-colors flex items-center gap-1.5">
               {loading && <div className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />}
               {isEdit ? 'Update' : 'Create'}
             </button>

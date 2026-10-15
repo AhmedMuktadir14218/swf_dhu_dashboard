@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   Legend,
 } from 'recharts';
+import { useTheme } from '../../theme/ThemeContext';
 
 const paretoData = [
   { defect: 'Iron Shine', count: 245, cumulative: 24.5 },
@@ -28,7 +29,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="bg-dashboard-dark border border-border-stroke rounded-lg px-3 py-2 shadow-xl">
         <p className="text-white text-xs font-semibold">{label}</p>
-        <p className="text-blue-400 text-xs">Count: {payload[0]?.value}</p>
+        <p className="text-[color:var(--accent)] text-xs">Count: {payload[0]?.value}</p>
         <p className="text-brand-amber text-xs">Cumulative: {payload[1]?.value}%</p>
       </div>
     );
@@ -37,6 +38,10 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 const ParetoChart = () => {
+  const { theme } = useTheme();
+  const barColor = theme === 'purple' ? '#a855f7' : '#3b82f6';
+  const gridColor = 'rgba(255,255,255,0.08)';
+
   return (
     <div className="bg-card-bg border border-border-stroke rounded-lg overflow-hidden">
       <div className="px-4 py-3 border-b border-border-stroke">
@@ -45,12 +50,12 @@ const ParetoChart = () => {
       <div className="p-3" style={{ height: 280 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={paretoData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+            <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
             <XAxis
               dataKey="defect"
               tick={{ fill: '#94a3b8', fontSize: 9 }}
-              axisLine={{ stroke: '#1e293b' }}
-              tickLine={{ stroke: '#1e293b' }}
+              axisLine={{ stroke: gridColor }}
+              tickLine={{ stroke: gridColor }}
               angle={-25}
               textAnchor="end"
               height={60}
@@ -58,16 +63,16 @@ const ParetoChart = () => {
             <YAxis
               yAxisId="left"
               tick={{ fill: '#94a3b8', fontSize: 10 }}
-              axisLine={{ stroke: '#1e293b' }}
-              tickLine={{ stroke: '#1e293b' }}
+              axisLine={{ stroke: gridColor }}
+              tickLine={{ stroke: gridColor }}
             />
             <YAxis
               yAxisId="right"
               orientation="right"
               domain={[0, 100]}
               tick={{ fill: '#94a3b8', fontSize: 10 }}
-              axisLine={{ stroke: '#1e293b' }}
-              tickLine={{ stroke: '#1e293b' }}
+              axisLine={{ stroke: gridColor }}
+              tickLine={{ stroke: gridColor }}
               unit="%"
             />
             <Tooltip content={<CustomTooltip />} />
@@ -79,7 +84,7 @@ const ParetoChart = () => {
               yAxisId="left"
               dataKey="count"
               name="Defect Count"
-              fill="#3b82f6"
+              fill={barColor}
               radius={[2, 2, 0, 0]}
               barSize={28}
             />

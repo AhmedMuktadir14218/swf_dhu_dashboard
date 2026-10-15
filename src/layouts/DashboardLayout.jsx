@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../theme/ThemeContext';
 import {
   LayoutDashboard,
   Users,
@@ -8,13 +9,14 @@ import {
   ChevronRight,
   LogOut,
   Factory,
-  PackageCheck
+  PackageCheck,
+  Palette
 } from 'lucide-react';
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard, adminOnly: false },
   { to: '/po-details', label: 'PO Details', icon: Factory, adminOnly: false },
-  { to: '/finishing', label: 'Finishing Dashboard', icon: PackageCheck, adminOnly: false },
+  // { to: '/finishing', label: 'Finishing Dashboard', icon: PackageCheck, adminOnly: false },
   { to: '/admin/users', label: 'User Management', icon: Users, adminOnly: true },
 
 ];
@@ -22,6 +24,7 @@ const navItems = [
 export default function DashboardLayout() {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [collapsed, setCollapsed] = useState(true);
 
   const handleLogout = () => {
@@ -32,9 +35,9 @@ export default function DashboardLayout() {
   const filteredNav = navItems.filter(item => !item.adminOnly || isAdmin);
 
   return (
-    <div className="flex h-screen bg-[#071a33] text-white overflow-hidden">
-      <aside className={`${collapsed ? 'w-16' : 'w-56'} bg-[#0a1f3d] border-r border-white/10 flex flex-col transition-all duration-300 shrink-0`}>
-        <div className={`flex ${collapsed ? 'flex-col items-center gap-2' : 'items-center gap-2'} px-3 py-3 border-b border-white/10`}>
+    <div className="flex h-screen bg-[var(--bg-page)] text-white overflow-hidden">
+      <aside className={`${collapsed ? 'w-16' : 'w-56'} bg-[var(--bg-sidebar)] border-r border-[color:var(--border-soft)] flex flex-col transition-all duration-300 shrink-0`}>
+        <div className={`flex ${collapsed ? 'flex-col items-center gap-2' : 'items-center gap-2'} px-3 py-3 border-b border-[color:var(--border-soft)]`}>
           <img
             src="/sewignLogo.png"
             alt="SWF DHU logo"
@@ -55,8 +58,8 @@ export default function DashboardLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-2 px-2 py-2 rounded-md text-xs font-medium transition-colors ${
                   isActive
-                    ? 'bg-sky-500/20 text-sky-400 border border-sky-500/30'
-                    : 'text-white/60 hover:bg-white/5 hover:text-white border border-transparent'
+                    ? 'bg-[var(--accent-soft)] text-[color:var(--accent)] border border-[color:var(--accent-border)]'
+                    : 'text-white/60 hover:bg-[var(--accent-soft2)] hover:text-white border border-transparent'
                 } ${collapsed ? 'justify-center' : ''}`
               }
             >
@@ -66,13 +69,21 @@ export default function DashboardLayout() {
           ))}
         </nav>
 
-        <div className="border-t border-white/10 p-2">
+        <div className="border-t border-[color:var(--border-soft)] p-2">
           {!collapsed && (
             <div className="px-2 py-2 mb-2">
               <p className="text-xs font-semibold text-white truncate">{user?.fullName}</p>
               <p className="text-[10px] text-white/40 truncate">{user?.userTypeName}</p>
             </div>
           )}
+          <button
+            onClick={toggleTheme}
+            title={theme === 'purple' ? 'Switch to default (blue) theme' : 'Switch to purple theme'}
+            className={`flex items-center gap-2 w-full px-2 py-2 rounded-md text-xs text-white/60 hover:text-white hover:bg-white/5 transition-colors ${collapsed ? 'justify-center' : ''}`}
+          >
+            <Palette className="w-4 h-4 shrink-0 text-[color:var(--accent)]" />
+            {!collapsed && <span>{theme === 'purple' ? 'Theme: Purple' : 'Theme: Blue'}</span>}
+          </button>
           <button
             onClick={handleLogout}
             className={`flex items-center gap-2 w-full px-2 py-2 rounded-md text-xs text-red-400 hover:bg-red-500/10 transition-colors ${collapsed ? 'justify-center' : ''}`}

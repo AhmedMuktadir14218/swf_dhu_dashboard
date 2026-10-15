@@ -359,8 +359,8 @@ export default function HourlyProductionHeatmap() {
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden shrink-0">
-        <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white">
+      <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden shrink-0">
+        <div className="px-3 py-1.5 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)] text-sm font-extrabold uppercase text-white">
           Hourly Production Tracker
         </div>
         <div className="flex items-center justify-center h-32 text-white/40 text-sm">
@@ -371,8 +371,8 @@ export default function HourlyProductionHeatmap() {
   }
 
   return (
-    <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden shrink-0 flex flex-col h-full">
-      <div className="px-3 py-1.5 border-b border-white/10 text-sm font-extrabold uppercase text-white shrink-0 flex justify-between items-center">
+    <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden shrink-0 flex flex-col h-full">
+      <div className="px-3 py-1.5 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)] text-sm font-extrabold uppercase text-white shrink-0 flex justify-between items-center">
         Hourly Production Tracker
         <button
           onClick={() => exportToCSV(rows, activeHours)}
@@ -383,7 +383,7 @@ export default function HourlyProductionHeatmap() {
       </div>
       <div className="overflow-y-auto flex-1">
         <table className="w-full text-[11px] text-white">
-          <thead className="bg-[#11458b] sticky top-0 z-10">
+          <thead className="bg-[var(--thead)] sticky top-0 z-10">
             <tr>
               {headers.map((head) => (
                 <th key={head} className="px-2 py-1 border border-white/10 text-center whitespace-nowrap">{head}</th>
@@ -392,7 +392,7 @@ export default function HourlyProductionHeatmap() {
           </thead>
           <tbody>
             {rows.map((row, idx) => (
-              <tr key={idx} className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c]">
+              <tr key={idx} className="odd:bg-[var(--row-odd)] even:bg-[var(--row-even)] hover:bg-[var(--row-hover)]">
                 {row.cells.map((cell, i) => {
                   if (i === 0) {
                     return (
@@ -415,7 +415,7 @@ export default function HourlyProductionHeatmap() {
           </tbody>
         </table>
       </div>
-      <div className="flex flex-wrap items-center gap-4 px-3 py-1 text-[10px] border-t border-white/10 text-white/80 bg-[#061830] shrink-0">
+      <div className="flex flex-wrap items-center gap-4 px-3 py-1 text-[10px] border-t border-[color:var(--border-soft)] text-white/80 bg-[var(--bg-footer)] shrink-0">
         <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-green-500 rounded-sm"></span>Eff ≥ Target</div>
         <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-yellow-400 rounded-sm"></span>Eff within -10%</div>
         <div className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-red-500 rounded-sm"></span>Eff &lt; Target -10%</div>

@@ -160,10 +160,10 @@ const PoDetailsContent = () => {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-[#071a33] text-white font-sans relative">
+    <div className="h-screen overflow-hidden bg-[var(--bg-page)] text-white font-sans relative">
 
       <div className="h-[7%] shrink-0 max-w-[2000px] mx-auto w-full px-1 pt-1 mb-1">
-        <div className="rounded-lg border border-white/15 bg-[#0a1f3d] px-3 py-1 shadow-md overflow-hidden h-full">
+        <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] px-3 py-1 shadow-md overflow-hidden h-full">
           <div className="flex items-center justify-center w-full h-full">
             <FilterBar showSearch />
           </div>
@@ -171,11 +171,11 @@ const PoDetailsContent = () => {
       </div>
 
       <div className="relative max-w-[2000px] mx-auto w-full flex-1 px-1 pb-1">
-        <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden flex flex-col h-[calc(100vh-6vh)]">
+        <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden flex flex-col h-[calc(100vh-6vh)]">
 
-          <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-[#071A33] shrink-0">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)] shrink-0">
             <div className="flex items-center gap-2">
-              <Factory className="w-4 h-4 text-sky-400" />
+              <Factory className="w-4 h-4 text-[color:var(--accent)]" />
               <h2 className="text-sm font-bold uppercase text-white">PO Details</h2>
               {!selectedRow && totalRecords > 0 && (
                 <span className="text-[11px] text-white/50 ml-2">Total: {totalRecords.toLocaleString()} records</span>
@@ -196,7 +196,7 @@ const PoDetailsContent = () => {
             {poLoading ? (
               <div className="flex items-center justify-center py-20 text-white/50">
                 <div className="flex flex-col items-center gap-3">
-                  <div className="w-8 h-8 border-[3px] border-white/20 border-t-sky-400 rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-[3px] border-white/20 border-t-[color:var(--accent)] rounded-full animate-spin" />
                   <span className="text-sm">Loading...</span>
                 </div>
               </div>
@@ -211,7 +211,7 @@ const PoDetailsContent = () => {
                     ['Style', selectedRow.styleName],
                     ['PO', selectedRow.poNumber],
                   ].map(([label, value]) => (
-                    <span key={label} className="px-2 py-1 rounded bg-[#0c2647] border border-white/10">
+                    <span key={label} className="px-2 py-1 rounded bg-[var(--bg-inset)] border border-[color:var(--border-soft)]">
                       <span className="text-white/50">{label}:</span> {value}
                     </span>
                   ))}
@@ -219,13 +219,13 @@ const PoDetailsContent = () => {
 
                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
 
-                  <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden">
-                    <div className="px-3 py-2 border-b border-white/10 bg-[#071A33]">
+                  <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden">
+                    <div className="px-3 py-2 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)]">
                       <h3 className="text-xs font-bold uppercase text-white/80">Line In Details</h3>
                     </div>
                     <div className="overflow-auto max-h-[calc(100vh-25vh)]">
                       <table className="w-full text-xs text-white">
-                        <thead className="bg-[#11458b] sticky top-0 z-10">
+                        <thead className="bg-[var(--thead)] sticky top-0 z-10">
                           <tr>
                             <th className="px-3 py-1.5 border border-white/10 text-left">Line In Date</th>
                             <th className="px-3 py-1.5 border border-white/10 text-right">Line In Qty</th>
@@ -239,12 +239,12 @@ const PoDetailsContent = () => {
                           ) : (
                             <>
                               {lineInDetails.map((item, i) => (
-                                <tr key={i} className="odd:bg-[#0c2647] even:bg-[#0a203c]">
+                                <tr key={i} className="odd:bg-[var(--row-odd)] even:bg-[var(--row-even)]">
                                   <td className="px-3 py-1.5 border border-white/10">{formatDate(item.lineInDate)}</td>
                                   <td className="px-3 py-1.5 border border-white/10 text-right font-semibold">{formatNum(item.lineInQty)}</td>
                                 </tr>
                               ))}
-                              <tr className="bg-[#0f2d5a] font-bold">
+                              <tr className="bg-[var(--row-total)] font-bold">
                                 <td className="px-3 py-1.5 border border-white/10">Total</td>
                                 <td className="px-3 py-1.5 border border-white/10 text-right">{formatNum(selectedRow.lineInQty)}</td>
                               </tr>
@@ -255,13 +255,13 @@ const PoDetailsContent = () => {
                     </div>
                   </div>
 
-                  <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden">
-                    <div className="px-3 py-2 border-b border-white/10 bg-[#071A33]">
+                  <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden">
+                    <div className="px-3 py-2 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)]">
                       <h3 className="text-xs font-bold uppercase text-white/80">QC Date wise Breakdown</h3>
                     </div>
                     <div className="overflow-auto max-h-[calc(100vh-25vh)]">
                       <table className="w-full text-xs text-white">
-                        <thead className="bg-[#11458b] sticky top-0 z-10">
+                        <thead className="bg-[var(--thead)] sticky top-0 z-10">
                           <tr>
                             <th className="px-3 py-1.5 border border-white/10 text-left">QC Date</th>
                             
@@ -278,8 +278,8 @@ const PoDetailsContent = () => {
                              </tr>
                            ) : (
                              <>
-                                {pivotData.dates.map(date => (
-                                  <tr key={date} className="odd:bg-[#0c2647] even:bg-[#0a203c]">
+                                 {pivotData.dates.map(date => (
+                                  <tr key={date} className="odd:bg-[var(--row-odd)] even:bg-[var(--row-even)]">
                                     <td className="px-3 py-1.5 border border-white/10">{formatDate(date)}</td>
                                     {pivotData.stations.map(station => (
                                       <td key={station} className="px-3 py-1.5 border border-white/10 text-right">
@@ -293,9 +293,9 @@ const PoDetailsContent = () => {
                                     </td>
                                   </tr>
                                 ))}
-                               <tr className="bg-[#0f2d5a] font-bold">
-                                 <td className="px-3 py-1.5 border border-white/10">Total</td>
-                                 {pivotData.stations.map(station => (
+                               <tr className="bg-[var(--row-total)] font-bold">
+                                  <td className="px-3 py-1.5 border border-white/10">Total</td>
+                                  {pivotData.stations.map(station => (
                                    <td key={station} className="px-3 py-1.5 border border-white/10 text-right">
                                      {formatNum(
                                        pivotData.dates.reduce((sum, date) => {
@@ -327,7 +327,7 @@ const PoDetailsContent = () => {
               <div className="flex items-center justify-center py-20 text-white/50">No data found</div>
             ) : (
               <table className="w-full text-xs text-white min-w-[1400px]" >
-                <thead className="bg-[#11458b] sticky top-0 z-10">
+                <thead className="bg-[var(--thead)] sticky top-0 z-10">
                   <tr>
                     {STATIC_HEADERS.map(col => (
                       <th key={col.id} rowSpan={allStations.length > 0 ? 2 : 1} className="px-2 py-1.5 border border-white/10 text-left whitespace-nowrap">{col.label}</th>
@@ -358,7 +358,7 @@ const PoDetailsContent = () => {
                       <tr
                         key={i}
                         onClick={() => setSelectedRow(row)}
-                        className="odd:bg-[#0c2647] even:bg-[#0a203c] hover:bg-[#13325c] cursor-pointer transition-colors"
+                        className="odd:bg-[var(--row-odd)] even:bg-[var(--row-even)] hover:bg-[var(--row-hover)] cursor-pointer transition-colors"
                       >
                         <td className="px-2 py-1 border border-white/10 text-center text-white/40">{(page - 1) * pageSize + i + 1}</td>
                         <td className="px-2 py-1 border border-white/10">{row.plantName}</td>
@@ -395,10 +395,10 @@ const PoDetailsContent = () => {
                         <td className="px-2 py-1 border border-white/10 text-center">{row.finalQcStationName || '-'}</td>
                         <td className="px-2 py-1 border border-white/10 text-center font-semibold text-green-400">{formatNum(row.passQty)}</td>
                         <td className="px-2 py-1 border border-white/10 text-center font-semibold text-green-400">{formatNum(row.finalWholePassQty)}</td>
-                        <td className="px-2 py-1 border border-white/10 text-center font-semibold text-sky-300">
+                        <td className="px-2 py-1 border border-white/10 text-center font-semibold text-[color:var(--accent)]">
                           {formatNum(getFinalStationValue(row, 'checkQty'))}
                         </td>
-                        <td className="px-2 py-1 border border-white/10 text-center font-semibold text-sky-300">
+                        <td className="px-2 py-1 border border-white/10 text-center font-semibold text-[color:var(--accent)]">
                           {formatNum(getFinalStationValue(row, 'wholeCheckQty'))}
                         </td>
                         <td className="px-2 py-1 border border-white/10 text-center">
@@ -413,7 +413,7 @@ const PoDetailsContent = () => {
           </div>
 
           {!selectedRow && totalPages > 1 && (
-            <div className="flex items-center justify-between px-4 py-2 border-t border-white/10 bg-[#071A33] shrink-0">
+            <div className="flex items-center justify-between px-4 py-2 border-t border-[color:var(--border-soft)] bg-[var(--bg-inset)] shrink-0">
               <span className="text-[11px] text-white/50">
                 Page {page} of {totalPages} ({totalRecords} records)
               </span>
@@ -434,7 +434,7 @@ const PoDetailsContent = () => {
                     onClick={() => handlePageChange(num)}
                     className={`w-7 h-7 rounded border text-[11px] transition-colors ${
                       num === page
-                        ? 'bg-sky-500/20 border-sky-500/30 text-sky-400'
+                        ? 'bg-[var(--accent-soft)] border-[color:var(--accent-border)] text-[color:var(--accent)]'
                         : 'border-white/10 text-white/60 hover:bg-white/10'
                     }`}
                   >{num}</button>

@@ -1,8 +1,10 @@
 import { ResponsiveContainer, ComposedChart, Bar, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { useFilter } from './FilterContext';
+import { useTheme } from '../../theme/ThemeContext';
 
 export default function ParetoChart() {
   const { dashboardData } = useFilter();
+  const { theme } = useTheme();
   const issues = dashboardData.issueDetails;
 
   const issueAgg = {};
@@ -24,9 +26,9 @@ export default function ParetoChart() {
   
 
   return (
-    <div className="rounded-lg border border-white/15 bg-[#0a1f3d] overflow-hidden flex flex-col h-full">
-      
-      <div className="px-3 py-1 border-b border-white/10 text-xs font-extrabold uppercase text-white shrink-0">
+    <div className="rounded-lg border border-[color:var(--border-soft)] bg-[var(--bg-card)] overflow-hidden flex flex-col h-full">
+
+      <div className="px-3 py-1 border-b border-[color:var(--border-strong)] bg-gradient-to-r from-[var(--card-header-from)] to-[var(--card-header-to)] text-xs font-extrabold uppercase text-white shrink-0">
         Defect Analytics
       </div>
       <div className="p-1 flex-1 flex flex-col min-h-0">
@@ -37,14 +39,14 @@ export default function ParetoChart() {
               <XAxis dataKey="name" tick={{ fill: "#fff", fontSize: 7 }} angle={-45} textAnchor="end" height={30} interval={0} />
               <YAxis yAxisId="left" tick={{ fill: "#fff", fontSize: 7 }} />
               <YAxis yAxisId="right" orientation="right" tick={{ fill: "#fff", fontSize: 7 }} domain={[0, 100]} />
-              <Tooltip cursor={{ fill: "rgba(255,255,255,0.1)" }} contentStyle={{ backgroundColor: '#0a1f3d', borderColor: '#ffffff20', color: '#fff', fontSize: '9px' }} />
-              <Bar yAxisId="left" dataKey="defects" fill="#2d8cff" radius={[2, 2, 0, 0]} barSize={10} />
+              <Tooltip cursor={{ fill: "rgba(255,255,255,0.1)" }} contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--tooltip-border)', color: '#fff', fontSize: '9px' }} />
+              <Bar yAxisId="left" dataKey="defects" fill={theme === 'purple' ? '#a855f7' : '#2d8cff'} radius={[2, 2, 0, 0]} barSize={10} />
               <Line yAxisId="right" type="monotone" dataKey="cumulative" stroke="#ffffff" strokeWidth={1.5} dot={{ r: 2, fill: '#fff' }} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
         <div className="flex items-center justify-center gap-3 text-[7px] text-white/80 shrink-0">
-          <div className="flex items-center gap-1"><span className="w-2.5 h-1.5 bg-[#2d8cff] rounded-sm"></span> Defects</div>
+          <div className="flex items-center gap-1"><span className="w-2.5 h-1.5 bg-[var(--chart-bar)] rounded-sm"></span> Defects</div>
           <div className="flex items-center gap-1"><span className="w-2.5 h-[1.5px] bg-white"></span> Cumulative %</div>
         </div>
       </div>
